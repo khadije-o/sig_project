@@ -35,12 +35,12 @@ const FicheDuJour: React.FC = () => {
     }, []);
 
     const handleDelete = (id: number) => {
-        const confirmDelete = window.confirm("Voulez-vous vraiment supprimer cette fiche ?");
+        const confirmDelete = window.confirm("Confirmez-vous la suppression de cet enregistrement ?");
         if (!confirmDelete) return;
       
         axios.delete(`http://localhost:8000/generatefiles/fichebesoin/${id}/`)
           .then(() => {
-            alert("Fiche supprimée !");
+            alert("Enregistrement supprimée !");
             // Recharger les données après suppression
             setFiches(prev => prev.filter(fiche => fiche.id !== id));
           })

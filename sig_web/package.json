@@ -11,9 +11,15 @@
   },
   "dependencies": {
     "axios": "^1.8.4",
+    "bootstrap": "^5.3.5",
+    "dayjs": "^1.11.13",
     "font-awesome": "^4.7.0",
+    "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-bootstrap": "^2.10.9",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.5.2",
+    "sweetalert2": "^11.19.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

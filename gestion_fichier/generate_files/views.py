@@ -67,7 +67,7 @@ def pdf_fiche_besoin(request):
     spaceBefore=0
     )
 
-    logo_path = os.path.join(settings.BASE_DIR, 'generate_files', 'static', 'generate_files', 'images', 'mpn.png')
+    logo_path = os.path.join(settings.BASE_DIR, 'generate_files', 'static', 'generate_files', 'images', 'logo1.jpg')
     logo = Image(logo_path, width=130, height=130) 
 
     titles_paragraph = Paragraph(

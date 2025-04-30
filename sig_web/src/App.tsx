@@ -1,73 +1,100 @@
+
 import './App.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import PrivateRoute from "./utils/PrivateRoute";
-import { AuthProvider } from './context/AuthContext';
+import { Fragment, useContext, useEffect, useState } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  Navigate
+} from 'react-router-dom';
+
+import AuthContext, { AuthProvider } from './context/AuthContext';
 
 import Registerpage from './components/RegisterPage';
 import Loginpage from './components/LoginPage';
-import FicheForm from './components/FicheForm';
-import FicheDuJour from './components/FicheJour';
-import DownloadPdfButton from './components/DownloadPdfButton';
-import AppNavbar from './components/Navbar';
-import Dashboard from './components/Dashboard';
+
+import Main from './main/Main';
+import Settings from './layoutsA/Settings';
+import Pages from './layoutsA/Pages';
+import Products from './layoutsA/Products';
 import Homepage from './components/HomePage';
+import Designation from './layouts/admin/layouts/Designation';
+import BonDeComnd from './layouts/admin/layouts/BonDeComnd';
+import Virement from './layouts/admin/layouts/Virement';
+import SideBarRouter from './components/SideBarRouter';
+import FisheBesoinsAdmin from './layouts/admin/layouts/AdminFisheBesoins';
+import FisheBesoinsUser from './layouts/user/layouts/UserFisheBesoins';
+import Devis from './layouts/admin/layouts/Devis';
+
 
 function AppContent() {
   const location = useLocation();
+  const [isLeftSidebarCollapsed, setIsLeftSidebarCollapsed] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const authContext = useContext(AuthContext);
 
-  // On cache la navbar sur login et register
-  const hideNavbar = location.pathname === "/login" || location.pathname === "/register";
+  useEffect(() => {
+    const updateSize = () => {
+      setScreenWidth(window.innerWidth);
+      if (window.innerWidth < 768) {
+        setIsLeftSidebarCollapsed(true);
+      }
+    };
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+
+  const hideSidebar = location.pathname === '/login' || location.pathname === '/register';
 
   return (
-    <>
-      {!hideNavbar && <AppNavbar />}
+    <Fragment>
+      {!hideSidebar && (
+      <SideBarRouter
+        isLeftSidebarCollapsed={isLeftSidebarCollapsed}
+        setIsLeftSidebarCollapsed={setIsLeftSidebarCollapsed}
+      />
+    )}
+
 
       <Routes>
-        {/* Auth Pages */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Loginpage />} />
         <Route path="/register" element={<Registerpage />} />
-
-        {/* Routes protégées */}
-        <Route element={<PrivateRoute />}>
-          <Route
-            path="/ficheform"
-            element={
-              <div className="sig-container">
-                <h3>SIG_MPN</h3>
-                <div className="ficheform">
-                  <FicheForm />
-                </div>
-                <div>
-                  <FicheDuJour />
-                </div>
-                <DownloadPdfButton
-                  url="http://localhost:8000/generatefiles/pdf_fiche/"
-                  filename={`fiches_${new Date().toISOString().split('T')[0]}.pdf`}
-                  label="Exporter en PDF"
-                  className="btn-pdf"
-                />
-              </div>
-            }
-          />
+        <Route
+          element={
+            <Main
+              screenWidth={screenWidth}
+              isLeftSidebarCollapsed={isLeftSidebarCollapsed}
+            />
+          }
+        >
+          <Route path="/fishebesoinsAdmin" element={<FisheBesoinsAdmin />} />
+          <Route path="/fishebesoinsUser" element={<FisheBesoinsUser />} />
+          <Route path="/designation" element={<Designation />} />
+          <Route path="/consolidation" element={<Designation />} />
+          <Route path="/bondecomnd" element={<BonDeComnd />} />
+          <Route path="/virement" element={<Virement />} />
+          <Route path="/devis" element={<Devis />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/pages" element={<Pages />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/homepage" element={<Homepage />} />
         </Route>
-
-        <Route path="/generatefiles/fichebesoin" element={<FicheForm />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/homepage" element={<Homepage />} />
       </Routes>
-    </>
+    </Fragment>
   );
 }
-
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <AuthProvider>
         <AppContent />
       </AuthProvider>
-    </Router>
+    </BrowserRouter>
   );
 }
 

@@ -1,0 +1,122 @@
+/* Base body styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #538171;
+  color: #000;
+}
+
+/* Heading center alignment */
+h5 {
+  align-items: center;
+}
+
+/* Background section */
+.login-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Container instead of card */
+.login-container {
+  width: 100%;
+  max-width: 450px;
+  min-height: 350px;
+  border-radius: 1rem;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Logo image */
+.login-logo {
+  display: block;
+  margin: 0 auto 1rem auto;
+  max-width: 180px;
+  border-radius: 12px;
+}
+
+/* Title */
+.login-title {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+/* Centrer le contenu dans la container */
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Largeur fixe des champs */
+.login-container .form-control {
+  width: 100%;
+  max-width: 100%;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+
+/* Centrer les labels */
+.login-container label.form-label {
+  width: 100%;
+  max-width: 300px;
+  text-align: left;
+}
+
+.login-button-container {
+  width: 100%;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center; /* ou 'flex-start' si tu veux l’aligner à gauche */
+}
+
+.login-button-container button {
+  width: 40%;
+  max-width: 100%;
+  background-color: #264b3e;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.login-button-container button:hover {
+  background-color: #2b614e;
+}
+
+/* Links and text below form */
+.text-center {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+.text-center a {
+  color: #393f81;
+  text-decoration: none;
+}
+
+.text-center a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+.login-footer {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}

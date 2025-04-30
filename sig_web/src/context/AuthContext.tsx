@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import LeftSidebar from "../left-sidebar/UserLeftSidebar";
 
 interface AuthTokens {
   access: string;
@@ -18,7 +19,7 @@ interface AuthContextType {
   setUser: (user: any) => void;
   authTokens: AuthTokens | null;
   setAuthTokens: (tokens: AuthTokens | null) => void;
-  registerUser: (email: string, firstname: string, lastname: string, password: string, password2: string) => Promise<void>;
+  registerUser: (email: string, first_name: string, last_name: string, password: string, password2: string) => Promise<void>;
   loginUser: (email: string, password: string) => Promise<void>;
   logoutUser: () => void;
 }
@@ -64,13 +65,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(decodedUser);
       localStorage.setItem("authTokens", JSON.stringify(data));
   
-      // ✅ Redirection selon le rôle
       if (decodedUser.is_staff) {
-        navigate("/homepage");
+        navigate("/fishebesoinsAdmin");
       } else {
-        navigate("/");
+        navigate("/fishebesoinsUser");
       }
-  
+      
       Swal.fire({
         title: "Login Successful",
         icon: "success",
@@ -94,13 +94,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
   
 
-  const registerUser = async (email: string, firstname: string, lastname: string, password: string, password2: string) => {
+  const registerUser = async (email: string, first_name: string, last_name: string, password: string, password2: string) => {
     const response = await fetch("http://127.0.0.1:8000/users/register/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ email, firstname, lastname, password, password2 })
+      body: JSON.stringify({ email, first_name, last_name, password, password2 })
     });
 
     if (response.status === 201) {
@@ -143,6 +143,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
   };
 
+
   const contextData: AuthContextType = {
     user,
     setUser,
@@ -160,10 +161,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     setLoading(false);
   }, [authTokens]);
 
+
+
   return (
     <AuthContext.Provider value={contextData}>
       {loading ? null : children}
+      
+      
     </AuthContext.Provider>
+    
   );
 };
 

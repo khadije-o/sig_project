@@ -140,9 +140,8 @@ function LoginPage() {
     <div>
       <section className="login-section">
         <div className="container login-container">
-          {/* Logo centré */}
           <img src={deskImage} alt="Logo" className="login-logo" />
-          <h5 className="login-title">Se connecter</h5>
+          {/* <h5 className="login-title">Se connecter</h5> */}
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -172,19 +171,19 @@ function LoginPage() {
             </div>
 
             <div className="login-button-container">
-              <button type="submit">Login</button>
+              <button type="submit">Se connecter</button>
             </div>
 
             <div className="text-center">
-              <a className="small text-muted" href="#!">Forgot password?</a>
+              <a className="forgot-link"  href="#!">Mot de passe oublié?</a>
               <p className="mt-2" style={{ color: "#393f81" }}>
-                Don't have an account?{" "}
-                <Link to="/register" style={{ color: "#393f81" }}>
-                  Register Now
+                Vous n'avez pas de compte?{" "}
+                <Link to="/register" className="register-link">
+                  Créer un compte
                 </Link>
               </p>
-              <a href="#!" className="small text-muted d-block">Terms of use</a>
-              <a href="#!" className="small text-muted d-block">Privacy policy</a>
+              {/* <a href="#!" className="small text-muted d-block">Terms of use</a>
+              <a href="#!" className="small text-muted d-block">Privacy policy</a> */}
             </div>
           </form>
         </div>

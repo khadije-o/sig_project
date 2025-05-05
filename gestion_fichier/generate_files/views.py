@@ -19,6 +19,7 @@ class FicheBesoinsViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(fiches, many=True)
         return Response({'fiches': serializer.data})
     
+    
 
     
 

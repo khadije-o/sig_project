@@ -151,7 +151,7 @@ import { useState, useContext, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import deskImage from '../assets/images/logo1.jpg';
-import '../css/LoginPage.css'; // utilise le même fichier CSS
+import '../css/LoginPage.css';
 
 function RegisterPage() {
   const authContext = useContext(AuthContext);
@@ -171,10 +171,10 @@ function RegisterPage() {
 
   return (
     <div>
-      <section className="login-section">
+      <section className="login-section register-page">
         <div className="container login-container">
           <img src={deskImage} alt="Logo" className="login-logo" />
-          <h5 className="login-title">Créer un compte</h5>
+          {/* <h5 className="login-title">Créer un compte</h5> */}
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
@@ -233,18 +233,18 @@ function RegisterPage() {
             </div>
 
             <div className="login-button-container">
-              <button type="submit">Register</button>
+              <button type="submit">S'inscrire</button>
             </div>
 
             <div className="text-center">
               <p className="mt-2" style={{ color: "#393f81" }}>
                 Déjà un compte ?{" "}
-                <Link to="/login" style={{ color: "#393f81" }}>
+                <Link to="/login" className="register-link">
                   Se connecter
                 </Link>
               </p>
-              <a href="#!" className="small text-muted d-block">Terms of use</a>
-              <a href="#!" className="small text-muted d-block">Privacy policy</a>
+              {/* <a href="#!" className="small text-muted d-block">Terms of use</a>
+              <a href="#!" className="small text-muted d-block">Privacy policy</a> */}
             </div>
           </form>
         </div>

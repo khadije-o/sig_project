@@ -28,6 +28,7 @@ import SideBarRouter from './components/SideBarRouter';
 import FisheBesoinsAdmin from './layouts/admin/layouts/AdminFisheBesoins';
 import FisheBesoinsUser from './layouts/user/layouts/UserFisheBesoins';
 import Devis from './layouts/admin/layouts/Devis';
+import Consolidation from './layouts/admin/layouts/Consolidation';
 
 
 function AppContent() {
@@ -75,7 +76,7 @@ function AppContent() {
           <Route path="/fishebesoinsAdmin" element={<FisheBesoinsAdmin />} />
           <Route path="/fishebesoinsUser" element={<FisheBesoinsUser />} />
           <Route path="/designation" element={<Designation />} />
-          <Route path="/consolidation" element={<Designation />} />
+          <Route path="/consolidation" element={<Consolidation />} />
           <Route path="/bondecomnd" element={<BonDeComnd />} />
           <Route path="/virement" element={<Virement />} />
           <Route path="/devis" element={<Devis />} />

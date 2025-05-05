@@ -21,4 +21,7 @@ urlpatterns = [
     path('', include('generate_files.urls')),
     path('admin/', admin.site.urls),
     path('users/', include("users.urls")),             
+    path('designation/', include('designation.urls')), 
+    path('invitation_offre/', include('invitation_offre.urls')), 
+    path('invitation_fichiers/', include('invitation_fichiers.urls')) 
 ]

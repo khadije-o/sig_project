@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'generate_files',
     'corsheaders',
+    'designation',
+    'invitation_offre',
+    'invitation_fichiers',
     'users',
     'rest_framework_simplejwt.token_blacklist',
 ]

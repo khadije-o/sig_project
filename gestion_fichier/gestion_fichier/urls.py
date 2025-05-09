@@ -18,10 +18,14 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('generate_files.urls')),
+    # path('', include('generate_files.urls')),
     path('admin/', admin.site.urls),
     path('users/', include("users.urls")),             
-    path('designation/', include('designation.urls')), 
-    path('invitation_offre/', include('invitation_offre.urls')), 
-    path('invitation_fichiers/', include('invitation_fichiers.urls')) 
+    path('fiches_besoin/', include('fiches_besoin.urls')),  # Inclus les routes définies dans fiches/urls.py
+    path('besoins/', include('besoins.urls')), 
+    path('invitations_offre/', include('invitations_offre.urls')),
+    path('invitation_fiche_besoin/', include('invitation_fiche_besoin.urls')), 
+    path('designation/', include('designation.urls')),  
+
+    
 ]

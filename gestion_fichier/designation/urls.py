@@ -3,7 +3,7 @@ from .views import DesignationViewSet
 from django.urls import path, include
 
 router = DefaultRouter()
-router.register(r'', DesignationViewSet, basename='designation')
+router.register(r'designation', DesignationViewSet)
 
 urlpatterns = [
     path('', include(router.urls)), 

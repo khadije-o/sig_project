@@ -40,13 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'generate_files',
+    'fiches_besoin',
     'corsheaders',
+    'besoins',
     'designation',
-    'invitation_offre',
-    'invitation_fichiers',
+    'invitations_offre',
+    'invitation_fiche_besoin',
     'users',
     'rest_framework_simplejwt.token_blacklist',
+    
 ]
 
 MIDDLEWARE = [
@@ -89,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sig_mpn',
         'USER': 'postgres',
-        'PASSWORD': 'psql1771',
+        'PASSWORD': '49468724',
         'HOST': 'localhost',
         'PORT': '5432',
     }

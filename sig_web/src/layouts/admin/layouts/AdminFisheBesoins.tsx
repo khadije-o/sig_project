@@ -7,7 +7,7 @@ const FisheBesoinsAdmin = () => {
           <FicheForm />
           <FicheDuJour />
           <DownloadPdfButton 
-            url="http://localhost:8000/generatefiles/pdf_fiche/" 
+            url="http://localhost:8000/fiches_besoin/pdf_fiche/" 
             filename="fiche_besoin_admin.pdf" 
             label="Télécharger la fiche PDF"
           />

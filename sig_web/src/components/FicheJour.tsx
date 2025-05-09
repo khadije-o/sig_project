@@ -1,169 +1,237 @@
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
+// import Swal from 'sweetalert2';
 
-// interface Designation {
+// interface User {
 //   id: number;
-//   nom: string;
+//   first_name: string;
+//   last_name: string;
 // }
 
 // interface Fiche {
 //   id: number;
 //   quantité: number;
-//   designation: number; // ID de la désignation
+//   designation: number;
 //   observation: string;
 //   date_creation: string;
+//   user: User;
+//   statut: string;
 // }
 
 // const FicheDuJour: React.FC = () => {
 //   const [fiches, setFiches] = useState<Fiche[]>([]);
-//   const [designations, setDesignations] = useState<Designation[]>([]);
 //   const [error, setError] = useState<string | null>(null);
 //   const [today, setToday] = useState<string>('');
-//   const [editingFiche, setEditingFiche] = useState<Fiche | null>(null);
-//   const [formData, setFormData] = useState<Partial<Fiche>>({});
 
 //   useEffect(() => {
 //     const fetchData = async () => {
-//       try {
-//         const [ficheRes, designationRes] = await Promise.all([
-//           axios.get('http://localhost:8000/generatefiles/fiche-du-jour/'),
-//           axios.get('http://localhost:8000/designation/'),
-//         ]);
+//       const tokens = localStorage.getItem("authTokens");
+//       const auth = tokens ? JSON.parse(tokens) : null;
 
-//         setFiches(ficheRes.data.fiches);
-//         setDesignations(designationRes.data);
+//       try {
+//         const ficheRes = await axios.get('http://localhost:8000/fiches_besoin/fiches_besoin/', {
+//           headers: {
+//             Authorization: `Bearer ${auth?.access}`
+//           }
+//         });
+
+//         setFiches(ficheRes.data);
 //         setToday(new Date().toLocaleDateString('fr-FR'));
 //       } catch (err) {
-//         setError("Erreur lors du chargement des données.");
+//         console.error(err);
+//         setError('Erreur lors du chargement des fiches.');
 //       }
 //     };
 
 //     fetchData();
 //   }, []);
 
-//   const handleDelete = async (id: number) => {
-//     if (!window.confirm("Confirmez-vous la suppression de cet enregistrement ?")) return;
-
-//     try {
-//       await axios.delete(`http://localhost:8000/generatefiles/fichebesoin/${id}/`);
-//       setFiches(prev => prev.filter(fiche => fiche.id !== id));
-//     } catch (err) {
-//       alert("Erreur lors de la suppression.");
-//     }
+//   const getStatutLabel = (statut: string) => {
+//     const statuts: Record<string, string> = {
+//       'en_attente': 'En attente',
+//       'acceptee': 'Acceptée',
+//       'rejetee': 'Rejetée',
+//       'historique': 'Historique'
+//     };
+//     return statuts[statut] || statut;
 //   };
 
-//   const startEditing = (fiche: Fiche) => {
-//     setEditingFiche(fiche);
-//     setFormData({
-//       quantité: fiche.quantité,
-//       designation: fiche.designation,
-//       observation: fiche.observation,
+//   const showDetail = (fiche: Fiche) => {
+//     Swal.fire({
+//       title: `Détails de la fiche #${fiche.id}`,
+//       html: `
+//         <strong>Quantité:</strong> ${fiche.quantité}<br />
+//         <strong>Désignation ID:</strong> ${fiche.designation}<br />
+//         <strong>Observation:</strong> ${fiche.observation}<br />
+//         <strong>Date de création:</strong> ${fiche.date_creation}<br />
+//         <strong>Utilisateur:</strong> ${fiche.user.first_name} ${fiche.user.last_name}<br />
+//         <strong>Statut:</strong> ${getStatutLabel(fiche.statut)}<br />
+//       `,
+//       icon: 'info'
 //     });
-//   };
-
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-//     const { name, value } = e.target;
-//     setFormData(prev => ({
-//       ...prev,
-//       [name]: name === 'quantité' || name === 'designation' ? parseInt(value) || '' : value,
-//     }));
-//   };
-
-//   const handleUpdate = async () => {
-//     if (!editingFiche) return;
-
-//     try {
-//       const response = await axios.patch(
-//         `http://localhost:8000/generatefiles/fichebesoin/${editingFiche.id}/`,
-//         formData
-//       );
-//       setFiches(fiches.map(f =>
-//         f.id === editingFiche.id ? response.data : f
-//       ));
-//       setEditingFiche(null);
-//     } catch (err) {
-//       alert("Erreur lors de la mise à jour.");
-//     }
-//   };
-
-//   const getDesignationName = (id: number) => {
-//     const item = designations.find(d => d.id === id);
-//     return item ? item.nom : 'Inconnu';
 //   };
 
 //   return (
 //     <div>
 //       <h2>Fiches de Besoin du {today}</h2>
 
-//       {editingFiche && (
-//         <div className="edit-form">
-//           <h3>Modifier la fiche</h3>
-//           <div>
-//             <label>Quantité:</label>
-//             <input
-//               type="number"
-//               name="quantité"
-//               value={formData.quantité || ''}
-//               onChange={handleInputChange}
-//             />
-//           </div>
-//           <div>
-//             <label>Désignation:</label>
-//             <select
-//               name="designation"
-//               value={formData.designation || ''}
-//               onChange={handleInputChange}
-//             >
-//               <option value="">-- Choisir --</option>
-//               {designations.map(d => (
-//                 <option key={d.id} value={d.id}>{d.nom}</option>
-//               ))}
-//             </select>
-//           </div>
-//           <div>
-//             <label>Observation:</label>
-//             <input
-//               type="text"
-//               name="observation"
-//               value={formData.observation || ''}
-//               onChange={handleInputChange}
-//             />
-//           </div>
-//           <button onClick={handleUpdate}>Enregistrer</button>
-//           <button onClick={() => setEditingFiche(null)}>Annuler</button>
-//         </div>
-//       )}
+//       {error && <p style={{ color: 'red' }}>{error}</p>}
 
 //       <table>
 //         <thead>
 //           <tr>
-//             <th>Quantité</th>
-//             <th>Désignation</th>
-//             <th>Observation</th>
+//             <th>Numéro de Fiche</th>
 //             <th>Date de Création</th>
-//             <th>Actions</th>
+//             <th>Statut</th>
+//             <th>Action</th>
 //           </tr>
 //         </thead>
 //         <tbody>
 //           {fiches.length > 0 ? (
 //             fiches.map(fiche => (
 //               <tr key={fiche.id}>
-//                 <td>{fiche.quantité}</td>
-//                 <td>{getDesignationName(fiche.designation)}</td>
-//                 <td>{fiche.observation}</td>
+//                 <td>{fiche.id}</td>
 //                 <td>{fiche.date_creation}</td>
+//                 <td>{getStatutLabel(fiche.statut)}</td>
 //                 <td>
-//                   <button onClick={() => startEditing(fiche)}>
-//                     <i className="fa fa-pencil" />
-//                   </button>
-//                   <button onClick={() => handleDelete(fiche.id)}>
-//                     <i className="fa fa-trash" />
+//                   <button onClick={() => showDetail(fiche)}>
+//                     Voir fiche besoin n°{fiche.id}
 //                   </button>
 //                 </td>
 //               </tr>
 //             ))
 //           ) : (
-//             <tr><td colSpan={5}>Aucune fiche pour aujourd'hui.</td></tr>
+//             <tr>
+//               <td colSpan={4}>Aucune fiche pour aujourd'hui.</td>
+//             </tr>
+//           )}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default FicheDuJour;
+
+
+
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import Swal from 'sweetalert2';
+
+// interface Designation {
+//   id: number;
+//   nom: string;
+// }
+
+// interface Besoin {
+//   id: number;
+//   quantité: number;
+//   observation: string;
+//   designation: Designation;
+// }
+
+// interface User {
+//   id: number;
+//   first_name: string;
+//   last_name: string;
+// }
+
+// interface Fiche {
+//   id: number;
+//   numero: number;
+//   date_fiche: string;
+//   status: string;
+//   user: User;
+//   besoin: Besoin;
+// }
+
+// const FicheDuJour: React.FC = () => {
+//   const [fiches, setFiches] = useState<Fiche[]>([]);
+//   const [error, setError] = useState<string | null>(null);
+//   const [today, setToday] = useState<string>('');
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const tokens = localStorage.getItem("authTokens");
+//       const auth = tokens ? JSON.parse(tokens) : null;
+
+//       try {
+//         const res = await axios.get('http://localhost:8000/fiches_besoin/fiches_besoin/', {
+//           headers: {
+//             Authorization: `Bearer ${auth?.access}`
+//           }
+//         });
+
+//         setFiches(res.data);
+//         setToday(new Date().toLocaleDateString('fr-FR'));
+//       } catch (err) {
+//         console.error(err);
+//         setError('Erreur lors du chargement des fiches.');
+//       }
+//     };
+
+//     fetchData();
+//   }, []);
+
+//   const getStatutLabel = (status: string) => {
+//     const statuts: Record<string, string> = {
+//       'en_attente': 'En attente',
+//       'acceptee': 'Acceptée',
+//       'rejetee': 'Rejetée',
+//       'historique': 'Historique'
+//     };
+//     return statuts[status] || status;
+//   };
+
+//   const showDetail = (fiche: Fiche) => {
+//     Swal.fire({
+//       title: `Détails de la fiche #${fiche.id}`,
+//       html: `
+//         <strong>Quantité:</strong> ${fiche.besoin.quantité}<br />
+//         <strong>Désignation:</strong> ${fiche.besoin.designation.nom}<br />
+//         <strong>Observation:</strong> ${fiche.besoin.observation}<br />
+//         <strong>Date de création:</strong> ${fiche.date_fiche}<br />
+//         <strong>Utilisateur:</strong> ${fiche.user.first_name} ${fiche.user.last_name}<br />
+//         <strong>Statut:</strong> ${getStatutLabel(fiche.status)}<br />
+//       `,
+//       icon: 'info'
+//     });
+//   };
+
+//   return (
+//     <div>
+//       <h2>Fiches de Besoin du {today}</h2>
+
+//       {error && <p style={{ color: 'red' }}>{error}</p>}
+
+//       <table border={1} cellPadding={10}>
+//         <thead>
+//           <tr>
+//             <th>Numéro de Fiche</th>
+//             <th>Date de Création</th>
+//             <th>Status</th>
+//             <th>Action</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {fiches.length > 0 ? (
+//             fiches.map(fiche => (
+//               <tr key={fiche.id}>
+//                 <td>{fiche.numero}</td>
+//                 <td>{fiche.date_fiche}</td>
+//                 <td>{getStatutLabel(fiche.status)}</td>
+//                 <td>
+//                   <button onClick={() => showDetail(fiche)}>
+//                     Voir besoin {fiche.id}
+//                   </button>
+//                 </td>
+//               </tr>
+//             ))
+//           ) : (
+//             <tr>
+//               <td colSpan={4}>Aucune fiche pour aujourd'hui.</td>
+//             </tr>
 //           )}
 //         </tbody>
 //       </table>
@@ -177,10 +245,18 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 interface Designation {
   id: number;
   nom: string;
+}
+
+interface Besoin {
+  id: number;
+  quantite: number;
+  observation: string;
+  designation: Designation;
 }
 
 interface User {
@@ -191,165 +267,141 @@ interface User {
 
 interface Fiche {
   id: number;
-  quantité: number;
-  designation: number;
-  observation: string;
-  date_creation: string;
-  user: User; // Ajout de l'utilisateur
+  numero: number;
+  date_fiche: string;
+  status: string;
+  user: User;
+  besoins: Besoin[]; 
 }
 
 const FicheDuJour: React.FC = () => {
   const [fiches, setFiches] = useState<Fiche[]>([]);
-  const [designations, setDesignations] = useState<Designation[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [today, setToday] = useState<string>('');
-  const [editingFiche, setEditingFiche] = useState<Fiche | null>(null);
-  const [formData, setFormData] = useState<Partial<Fiche>>({});
 
   useEffect(() => {
     const fetchData = async () => {
+      const tokens = localStorage.getItem('authTokens');
+      const auth = tokens ? JSON.parse(tokens) : null;
+    
       try {
-        const [ficheRes, designationRes] = await Promise.all([
-          axios.get('http://localhost:8000/generatefiles/fiche-du-jour/'),
-          axios.get('http://localhost:8000/designation/'),
-        ]);
-
-        setFiches(ficheRes.data.fiches);
-        setDesignations(designationRes.data);
+        const res = await axios.get('http://localhost:8000/fiches_besoin/fiches_besoin/', {
+          headers: {
+            Authorization: `Bearer ${auth?.access}`,
+          },
+        });
+    
+        console.log(res.data); // Vérifiez ce qui est retourné par l'API
+        setFiches(res.data);
+        console.log(fiches);
         setToday(new Date().toLocaleDateString('fr-FR'));
       } catch (err) {
-        setError('Erreur lors du chargement des données.');
+        console.error(err);
+        setError('Erreur lors du chargement des fiches.');
       }
     };
+    
 
     fetchData();
   }, []);
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm('Confirmez-vous la suppression de cet enregistrement ?')) return;
-
-    try {
-      await axios.delete(`http://localhost:8000/generatefiles/fichebesoin/${id}/`);
-      setFiches(prev => prev.filter(fiche => fiche.id !== id));
-    } catch (err) {
-      alert('Erreur lors de la suppression.');
-    }
+  const getStatutLabel = (status: string) => {
+    const statuts: Record<string, string> = {
+      en_attente: 'En attente',
+      acceptee: 'Acceptée',
+      rejetee: 'Rejetée',
+      historique: 'Historique',
+    };
+    return statuts[status] || status;
   };
 
-  const startEditing = (fiche: Fiche) => {
-    setEditingFiche(fiche);
-    setFormData({
-      quantité: fiche.quantité,
-      designation: fiche.designation,
-      observation: fiche.observation,
+  const handleModifyBesoin = (besoinId: number) => {
+    alert(`Modifier le besoin ID ${besoinId}`);
+    // Logique pour modifier le besoin
+  };
+
+  const handleDeleteBesoin = (besoinId: number) => {
+    alert(`Supprimer le besoin ID ${besoinId}`);
+    // Logique pour supprimer le besoin
+  };
+
+  const showDetail = (fiche: Fiche) => {
+    const besoinsHtml = fiche.besoins
+      .map((besoin) => `
+        <tr>
+          <td>${besoin.designation|| 'N/A'}</td>
+          <td>${besoin.quantite || 'N/A'}</td> 
+          <td>${besoin.observation || 'Aucune observation'}</td>
+          <td>
+            <button id="modify-${besoin.id}">✏️</button>
+            <button id="delete-${besoin.id}">🗑️</button>
+          </td>
+        </tr>
+      `)
+      .join('');
+  
+    Swal.fire({
+      title: `Fiche #${fiche.numero} - ${getStatutLabel(fiche.status)}`,
+      html: `
+        <p><strong>Date de création :</strong> ${fiche.date_fiche}</p>
+        <p><strong>Utilisateur :</strong> ${fiche.user.first_name} ${fiche.user.last_name}</p>
+        <table border="1" cellpadding="6" cellspacing="0" style="width:100%; text-align:left;">
+          <thead>
+            <tr>
+              <th>Désignation</th>
+              <th>Quantité</th>
+              <th>Observation</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${besoinsHtml}
+          </tbody>
+        </table>
+      `,
+      width: '800px',
+      showCloseButton: true,
+      showConfirmButton: false,
     });
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'quantité' || name === 'designation' ? parseInt(value) || '' : value,
-    }));
-  };
-
-  const handleUpdate = async () => {
-    if (!editingFiche) return;
-
-    try {
-      const response = await axios.patch(
-        `http://localhost:8000/generatefiles/fichebesoin/${editingFiche.id}/`,
-        formData
-      );
-      setFiches(fiches.map(f =>
-        f.id === editingFiche.id ? response.data : f
-      ));
-      setEditingFiche(null);
-    } catch (err) {
-      alert('Erreur lors de la mise à jour.');
-    }
-  };
-
-  const getDesignationName = (id: number) => {
-    const item = designations.find(d => d.id === id);
-    return item ? item.nom : 'Inconnu';
+  
+    // Attacher des événements
+    fiche.besoins.forEach((besoin) => {
+      document.getElementById(`modify-${besoin.id}`)?.addEventListener('click', () => handleModifyBesoin(besoin.id));
+      document.getElementById(`delete-${besoin.id}`)?.addEventListener('click', () => handleDeleteBesoin(besoin.id));
+    });
   };
 
   return (
     <div>
       <h2>Fiches de Besoin du {today}</h2>
 
-      {editingFiche && (
-        <div className="edit-form">
-          <h3>Modifier la fiche</h3>
-          <div>
-            <label>Quantité:</label>
-            <input
-              type="number"
-              name="quantité"
-              value={formData.quantité || ''}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label>Désignation:</label>
-            <select
-              name="designation"
-              value={formData.designation || ''}
-              onChange={handleInputChange}
-            >
-              <option value="">-- Choisir --</option>
-              {designations.map(d => (
-                <option key={d.id} value={d.id}>{d.nom}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label>Observation:</label>
-            <input
-              type="text"
-              name="observation"
-              value={formData.observation || ''}
-              onChange={handleInputChange}
-            />
-          </div>
-          <button onClick={handleUpdate}>Enregistrer</button>
-          <button onClick={() => setEditingFiche(null)}>Annuler</button>
-        </div>
-      )}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <table>
+      <table border={1} cellPadding={10}>
         <thead>
           <tr>
-            <th>Quantité</th>
-            <th>Désignation</th>
-            <th>Observation</th>
+            <th>Numéro de Fiche</th>
             <th>Date de Création</th>
-            <th>Utilisateur</th>  {/* Nouvelle colonne */}
-            <th>Actions</th>
+            <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {fiches.length > 0 ? (
-            fiches.map(fiche => (
+            fiches.map((fiche) => (
               <tr key={fiche.id}>
-                <td>{fiche.quantité}</td>
-                <td>{getDesignationName(fiche.designation)}</td>
-                <td>{fiche.observation}</td>
-                <td>{fiche.date_creation}</td>
-                <td>{fiche.user.first_name} {fiche.user.last_name}</td>  
+                <td>{fiche.numero}</td>
+                <td>{fiche.date_fiche}</td>
+                <td>{getStatutLabel(fiche.status)}</td>
                 <td>
-                  <button onClick={() => startEditing(fiche)}>
-                    <i className="fa fa-pencil" />
-                  </button>
-                  <button onClick={() => handleDelete(fiche.id)}>
-                    <i className="fa fa-trash" />
-                  </button>
+                  <button onClick={() => showDetail(fiche)}>Voir besoin {fiche.id}</button>
                 </td>
               </tr>
             ))
           ) : (
-            <tr><td colSpan={6}>Aucune fiche pour aujourd'hui.</td></tr>
+            <tr>
+              <td colSpan={4}>Aucune fiche pour aujourd'hui.</td>
+            </tr>
           )}
         </tbody>
       </table>

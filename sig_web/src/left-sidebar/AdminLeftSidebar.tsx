@@ -18,39 +18,40 @@ const LeftSidebar = ({
   const items = [
     {
       routerLink: "/fishebesoinsAdmin",
-      icon: "fal fa-home",
+      icon: "fal fa-file-alt",
       label: "Fishe Besoins",
     },
     {
+      routerLink: "/groupfichebesoins",
+      icon: "fal fa-cog",
+      label: "GroupFicheBesoins",
+    },
+    {
       routerLink: "/designation",
-      icon: "fal fa-box-open",
+      icon: "fal fa-tag",
       label: "Designation",
     },
     {
       routerLink: "/consolidation",
-      icon: "fal fa-box-open",
+      icon: "fal fa-layer-group",
       label: "Consolidation",
     },
     {
       routerLink: "/bondecomnd",
-      icon: "fal fa-file",
+      icon: "fal fa-receipt",
       label: "Bon des commandes",
     },
     {
       routerLink: "/virement",
-      icon: "fal fa-file",
+      icon: "fal fa-exchange-alt",
       label: "Virement",
     },
     {
       routerLink: "/devis",
-      icon: "fal fa-cog",
+      icon: "fal fa-file-invoice-dollar",
       label: "Devis",
     },
-    {
-      routerLink: "/settings",
-      icon: "fal fa-cog",
-      label: "Settings",
-    },
+  
   ];
 
   const sidebarClasses = classNames({

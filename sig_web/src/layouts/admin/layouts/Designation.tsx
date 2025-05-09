@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
+
 // Définir le type pour une Désignation
 interface Designation {
   id: number;
@@ -20,7 +21,7 @@ const DesignationPage: React.FC = () => {
   useEffect(() => {
     const fetchDesignations = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/designation/');
+        const response = await axios.get('http://localhost:8000/designation/designation/');
         setDesignations(response.data);
       } catch (err) {
         Swal.fire({
@@ -54,7 +55,7 @@ const DesignationPage: React.FC = () => {
 
     if (editMode && editingDesignation) {
       try {
-        await axios.put(`http://localhost:8000/designation/${editingDesignation.id}/`, { nom });
+        await axios.put(`http://localhost:8000/designation/designation/${editingDesignation.id}/`, { nom });
         
         setDesignations(
           designations.map(d => (d.id === editingDesignation.id ? { ...d, nom } : d))
@@ -77,7 +78,7 @@ const DesignationPage: React.FC = () => {
       }
     } else {
       try {
-        await axios.post('http://localhost:8000/designation/', { nom });
+        await axios.post('http://localhost:8000/designation/designation/', { nom });
         setDesignations([...designations, { id: Math.random(), nom }]);
         setNom('');
         Swal.fire({
@@ -114,7 +115,7 @@ const DesignationPage: React.FC = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:8000/designation/${id}/`);
+        await axios.delete(`http://localhost:8000/designation/designation/${id}/`);
         setDesignations(designations.filter(d => d.id !== id));
 
         Swal.fire(

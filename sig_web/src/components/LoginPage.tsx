@@ -182,16 +182,10 @@ function LoginPage() {
                   Créer un compte
                 </Link>
               </p>
-              {/* <a href="#!" className="small text-muted d-block">Terms of use</a>
-              <a href="#!" className="small text-muted d-block">Privacy policy</a> */}
             </div>
           </form>
         </div>
       </section>
-
-      <footer className="login-footer">
-        © 2025 - till date Copyright:
-      </footer>
     </div>
   );
 }

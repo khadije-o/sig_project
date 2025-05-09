@@ -29,6 +29,7 @@ import FisheBesoinsAdmin from './layouts/admin/layouts/AdminFisheBesoins';
 import FisheBesoinsUser from './layouts/user/layouts/UserFisheBesoins';
 import Devis from './layouts/admin/layouts/Devis';
 import Consolidation from './layouts/admin/layouts/Consolidation';
+import GroupFicheBesoins from './layouts/admin/layouts/GroupFicheBesoins';
 
 
 function AppContent() {
@@ -80,7 +81,7 @@ function AppContent() {
           <Route path="/bondecomnd" element={<BonDeComnd />} />
           <Route path="/virement" element={<Virement />} />
           <Route path="/devis" element={<Devis />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/groupfichebesoins" element={<GroupFicheBesoins />} />
           <Route path="/pages" element={<Pages />} />
           <Route path="/products" element={<Products />} />
           <Route path="/homepage" element={<Homepage />} />

@@ -26,6 +26,8 @@ urlpatterns = [
     path('invitations_offre/', include('invitations_offre.urls')),
     path('invitation_fiche_besoin/', include('invitation_fiche_besoin.urls')), 
     path('designation/', include('designation.urls')),  
+    path('fiches_besoin/fiches_besoin/', include('besoins.urls')),
+
 
     
 ]

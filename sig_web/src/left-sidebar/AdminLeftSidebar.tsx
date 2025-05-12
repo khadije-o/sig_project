@@ -18,7 +18,7 @@ const LeftSidebar = ({
   const items = [
     {
       routerLink: "/fishebesoinsAdmin",
-      icon: "fal fa-file-alt",
+      icon: "fal fa-folder-open",
       label: "Fishe Besoins",
     },
     {

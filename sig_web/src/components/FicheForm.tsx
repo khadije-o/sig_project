@@ -86,23 +86,7 @@ const FicheForm: React.FC = () => {
 
   return (
     <div className="form-container" style={{ padding: '20px', position: 'relative' }}>
-      <h2>Ajouter un besoin</h2>
-
-      <button
-        type="button"
-        onClick={handleAddBesoin}
-        style={{
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          fontSize: '20px',
-          padding: '5px 10px',
-          cursor: 'pointer'
-        }}
-        title="Ajouter un besoin"
-      >
-        ➕
-      </button>
+      <h2>Ajouter un Fiche de besoins</h2>
 
       <form onSubmit={handleSubmit}>
         {besoins.map((besoin, index) => (
@@ -156,6 +140,14 @@ const FicheForm: React.FC = () => {
             </button>
           </div>
         ))}
+        <button
+            type="button"
+            onClick={handleAddBesoin}
+            className="add-btn"
+            title="Ajouter un besoin"
+          >
+            ➕
+          </button>
 
         <button type="submit">Enregistrer</button>
       </form>

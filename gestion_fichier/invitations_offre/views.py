@@ -5,3 +5,5 @@ from .serializers import InvitationSerializer
 class InvitationViewSet(viewsets.ModelViewSet):
     queryset = Invitation.objects.all()
     serializer_class = InvitationSerializer
+
+

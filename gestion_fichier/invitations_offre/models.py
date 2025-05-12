@@ -12,6 +12,7 @@ class Invitation(models.Model):
         limit_choices_to={'is_staff': True},  # pour s'assurer que seul les utilisateurs avec is_staff=True sont sélectionnés
         related_name='invitations_envoyees'
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'invitations_offres'

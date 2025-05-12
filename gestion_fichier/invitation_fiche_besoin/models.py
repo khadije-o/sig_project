@@ -13,6 +13,7 @@ class InvitationFicheBesoin(models.Model):
         on_delete=models.CASCADE,
         related_name='fiche_invitations'
     )
+    
 
     class Meta:
         db_table = 'invitation_fiche_besoin'

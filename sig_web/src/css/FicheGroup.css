@@ -1,0 +1,28 @@
+/* FicheGroup.css */
+
+.action-button {
+  background: transparent; /* Remove background color */
+  border: none; /* Remove border */
+  cursor: pointer; /* Change cursor to pointer */
+  margin-right: 10px; /* Add space between buttons */
+  padding: 5px 8px; /* Add some padding for better click area */
+  border-radius: 4px; /* Optional: add rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.action-button:last-child {
+  margin-right: 0; /* Remove margin for the last button */
+}
+
+.action-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Light background on hover */
+}
+
+/* Adjust icon size and vertical alignment */
+.action-button i {
+  font-size: 16px; /* Set icon size */
+  vertical-align: middle; /* Align icon vertically */
+  pointer-events: none; /* Prevent pointer events on the icon */
+}
+
+

@@ -1,7 +1,6 @@
 from rest_framework import viewsets
-
 from devisligne.serializer import DevisLigneSerializer
-from .models import Fournisseur, DevisGlobal, DevisLigne, Designation
+from .models import DevisLigne, Designation
 
 
 class DevisLigneViewSet(viewsets.ModelViewSet):

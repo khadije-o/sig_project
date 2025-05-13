@@ -1,7 +1,6 @@
 from rest_framework import serializers
-
 from devisligne.serializer import DevisLigneSerializer
-from .models import Fournisseur, DevisGlobal, DevisLigne, Designation
+from .models import DevisGlobal
 
 class DevisGlobalSerializer(serializers.ModelSerializer):
     lignes = DevisLigneSerializer(many=True, read_only=True)
@@ -9,3 +8,4 @@ class DevisGlobalSerializer(serializers.ModelSerializer):
     class Meta:
         model = DevisGlobal
         fields = '__all__'
+    

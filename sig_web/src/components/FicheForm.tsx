@@ -292,20 +292,9 @@ const FicheForm: React.FC = () => {
 
       <form onSubmit={handleSubmit}>
         {besoins.map((besoin, index) => (
+          
           <div key={index} className="besoin-group">
-            <div className="form-group">
-              <label>Quantité:</label>
-              <input
-                type="number"
-                name="quantité"
-                min="1"
-                value={besoin.quantité}
-                onChange={(e) => handleChange(index, e)}
-                required
-              />
-            </div>
-
-            <div className="form-group">
+                        <div className="form-group">
               <label>Désignation:</label>
               <select
                 name="designation"
@@ -320,6 +309,18 @@ const FicheForm: React.FC = () => {
                   </option>
                 ))}
               </select>
+            </div>
+            
+            <div className="form-group">
+              <label>Quantité:</label>
+              <input
+                type="number"
+                name="quantité"
+                min="1"
+                value={besoin.quantité}
+                onChange={(e) => handleChange(index, e)}
+                required
+              />
             </div>
 
             <div className="form-group">

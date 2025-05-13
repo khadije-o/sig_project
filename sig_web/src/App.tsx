@@ -17,7 +17,6 @@ import Registerpage from './components/RegisterPage';
 import Loginpage from './components/LoginPage';
 
 import Main from './main/Main';
-import Pages from './layoutsA/Pages';
 import Products from './layoutsA/Products';
 import Homepage from './components/HomePage';
 import Designation from './layouts/admin/layouts/Designation';
@@ -29,6 +28,7 @@ import FisheBesoinsUser from './layouts/user/layouts/UserFisheBesoins';
 import Devis from './layouts/admin/layouts/Devis';
 import Consolidation from './layouts/admin/layouts/Consolidation';
 import GroupFicheBesoins from './layouts/admin/layouts/GroupFicheBesoins';
+import GestionUsers from './layouts/admin/layouts/GestionUsers';
 
 
 function AppContent() {
@@ -81,7 +81,7 @@ function AppContent() {
           <Route path="/virement" element={<Virement />} />
           <Route path="/devis" element={<Devis />} />
           <Route path="/groupfichebesoins" element={<GroupFicheBesoins />} />
-          <Route path="/pages" element={<Pages />} />
+          <Route path="/gestionusers" element={<GestionUsers />} />
           <Route path="/products" element={<Products />} />
           <Route path="/homepage" element={<Homepage />} />
         </Route>

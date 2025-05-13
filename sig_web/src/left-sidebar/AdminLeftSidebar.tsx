@@ -23,7 +23,7 @@ const LeftSidebar = ({
     },
     {
       routerLink: "/groupfichebesoins",
-      icon: "fal fa-cog",
+      icon: "fal fa-folder-tree",
       label: "GroupFicheBesoins",
     },
     {
@@ -37,6 +37,11 @@ const LeftSidebar = ({
       label: "Consolidation",
     },
     {
+      routerLink: "/devis",
+      icon: "fal fa-file-invoice-dollar",
+      label: "Devis",
+    },
+    {
       routerLink: "/bondecomnd",
       icon: "fal fa-receipt",
       label: "Bon des commandes",
@@ -47,9 +52,9 @@ const LeftSidebar = ({
       label: "Virement",
     },
     {
-      routerLink: "/devis",
-      icon: "fal fa-file-invoice-dollar",
-      label: "Devis",
+      routerLink: "/gestionusers",
+      icon: "fal fa-users",
+      label: "GestionUsers",
     },
   
   ];

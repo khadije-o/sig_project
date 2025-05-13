@@ -23,6 +23,9 @@ urlpatterns = [
     path('users/', include("users.urls")),             
     path('fiches_besoin/', include('fiches_besoin.urls')),  # Inclus les routes définies dans fiches/urls.py
     path('besoins/', include('besoins.urls')), 
+    path('fournisseur/', include('fournisseur.urls')), 
+    path('devisligne/', include('devisligne.urls')), 
+    path('devisglobal/', include('devisglobal.urls')), 
     path('invitations_offre/', include('invitations_offre.urls')),
     path('invitation_fiche_besoin/', include('invitation_fiche_besoin.urls')), 
     path('designation/', include('designation.urls')),  

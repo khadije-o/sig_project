@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import "../../../css/Designation.css";
 
 // Définir le type pour une Désignation
 interface Designation {
@@ -133,13 +133,14 @@ const DesignationPage: React.FC = () => {
     }
   };
 
-  return (
-    <div>
+ 
+return (
+  <div className="designation-wrapper">
+    <div className="form-container">
       <h2>{editMode ? 'Modifier' : 'Ajouter'} une Désignation</h2>
 
-      {/* Formulaire pour ajouter ou modifier une désignation */}
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Nom de la Désignation:</label>
           <input
             type="text"
@@ -148,13 +149,31 @@ const DesignationPage: React.FC = () => {
             placeholder="Nom de la désignation"
           />
         </div>
-        <button type="submit">{editMode ? 'Mettre à jour' : 'Ajouter'} la Désignation</button>
+
+        <div className="form-buttons">
+          <button type="submit">
+            {editMode ? 'Mettre à jour' : 'Ajouter'}
+          </button>
+          {editMode && (
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => {
+                setEditMode(false);
+                setEditingDesignation(null);
+                setNom('');
+              }}
+            >
+             Annuler
+            </button>
+          )}
+        </div>
       </form>
 
-      {/* Affichage des erreurs */}
       {error && <div className="error-message">{error}</div>}
+    </div>
 
-      {/* Table des désignations */}
+    <div className="table-container">
       <h2>Liste des Désignations</h2>
       <table>
         <thead>
@@ -167,16 +186,21 @@ const DesignationPage: React.FC = () => {
           {designations.map(designation => (
             <tr key={designation.id}>
               <td>{designation.nom}</td>
-              <td>
-                <button onClick={() => handleEdit(designation)}>Modifier</button>
-                <button onClick={() => handleDelete(designation.id)}>Supprimer</button>
+              <td className="action-buttons">
+                <button onClick={() => handleEdit(designation)} title="Modifier">
+                  <i className="fal fa-pen-to-square"></i>
+                </button>
+                <button onClick={() => handleDelete(designation.id)} title="Supprimer">
+                  <i className="fal fa-trash-alt"></i>
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-  );
+  </div>
+);
 };
 
 export default DesignationPage;

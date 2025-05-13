@@ -1,91 +1,26 @@
-/* Styles généraux pour le conteneur */
-div {
-    margin: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Styles pour le titre */
-  h2 {
-    color: #333;
-  }
-  
-  /* Styles pour le formulaire */
-  form {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-  
-  /* Styles pour les labels et les champs de saisie */
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  /* Styles pour le bouton */
-  button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Styles pour les messages d'erreur */
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
-  
-  /* Styles pour la table */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
   tr:hover {
     background-color: #f1f1f1;
   }
   
-  /* Styles pour les boutons d'action dans la table */
   td button {
     margin-right: 5px;
-    background-color: #28a745; /* Couleur pour le bouton Modifier */
+    background-color: #0f8adb; 
   }
   
   td button:last-child {
-    background-color: #dc3545; /* Couleur pour le bouton Supprimer */
+    background-color: #dc3545; 
   }
   
-  td button:hover {
-    opacity: 0.8;
-  }
+.form-buttons .cancel_btn {
+  color: #f9f9f9;
+  background-color: #d14735;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-buttons .cancel_btn:hover {
+  background-color: #9c2712; /* une nuance plus foncée de bleu */
+  opacity: 0.95;
+}

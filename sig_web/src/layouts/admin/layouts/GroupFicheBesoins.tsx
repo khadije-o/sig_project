@@ -928,28 +928,30 @@ const FicheGroup: React.FC = () => {
                   <td>{fiche.user.first_name} {fiche.user.last_name}</td>
                   <td>{getStatutLabel(fiche.status)}</td>
                   <td>
-                    <button onClick={() => showDetail(fiche)} title="Détails">
+                  <div className="action-buttons">
+                    <button className="action-btn view-btn" onClick={() => showDetail(fiche)} title="Détails">
                       <i className="fas fa-eye"></i>
                     </button>
-                    <button onClick={() => downloadPdf(fiche.id)} title="Télécharger PDF">
-                      <i className="fas fa-file-pdf" style={{ color: 'white' }}></i>
+                    <button className="action-btn pdf-btn" onClick={() => downloadPdf(fiche.id)} title="Télécharger PDF">
+                      <i className="fas fa-file-pdf"></i>
                     </button>
                     {user?.is_staff && (
-                      <button onClick={() => handleDeleteFiche(fiche.id)} title="Supprimer fiche">
-                        <i className="fas fa-trash-alt" style={{ color: 'darkred' }}></i>
+                      <button className="action-btn delete-btn" onClick={() => handleDeleteFiche(fiche.id)} title="Supprimer fiche">
+                        <i className="fas fa-trash-alt"></i>
                       </button>
                     )}
-                  </td>
+                  </div>
+                </td>
                 </tr>
               ))}
             </tbody>
           </table>
           {user?.is_staff && selectedFiches.length > 0 && (
             <button
-              style={{ marginTop: '10px', padding: '10px 20px' }}
+              style={{ marginTop: '10px', padding: '10px 20px', backgroundColor:'blue'}}
               onClick={handleCreateInvitation}
             >
-              Créer une invitation avec les fiches sélectionnées
+              Créer une invitation
             </button>
           )}
         </>
@@ -961,9 +963,9 @@ const FicheGroup: React.FC = () => {
 
   return (
     <div>
-      <h2>Fiches de Besoins (Admin Groupées)</h2>
+      <h2>Ensemble des Fiches de Besoins</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
-      {renderFicheTable(fiches, user?.is_staff ? 'Ensemble des fiches besoins' : 'Mes fiches')}
+      {renderFicheTable(fiches, user?.is_staff ? '' : 'Mes fiches')}
     </div>
   );
 };

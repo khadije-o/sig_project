@@ -1,28 +1,76 @@
-/* FicheGroup.css */
-
+/* 
 .action-button {
-  background: transparent; /* Remove background color */
-  border: none; /* Remove border */
-  cursor: pointer; /* Change cursor to pointer */
-  margin-right: 10px; /* Add space between buttons */
-  padding: 5px 8px; /* Add some padding for better click area */
-  border-radius: 4px; /* Optional: add rounded corners */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  background: transparent;
+  border: none; 
+  cursor: pointer; 
+  margin-right: 10px;
+  padding: 5px 8px; 
+  border-radius: 4px; 
+  transition: background-color 0.3s ease;
 }
 
 .action-button:last-child {
-  margin-right: 0; /* Remove margin for the last button */
+  margin-right: 0; 
 }
 
 .action-button:hover {
-  background-color: rgba(0, 0, 0, 0.1); /* Light background on hover */
+  background-color: rgba(0, 0, 0, 0.1); 
 }
 
-/* Adjust icon size and vertical alignment */
+
 .action-button i {
-  font-size: 16px; /* Set icon size */
-  vertical-align: middle; /* Align icon vertically */
-  pointer-events: none; /* Prevent pointer events on the icon */
+  font-size: 16px;
+  vertical-align: middle; 
+  pointer-events: none; 
 }
 
+ */
 
+
+ 
+/* Style des boutons d'action */
+.action-buttons {
+  display: flex;
+  gap: 10px; /* Espacement entre les boutons */
+  justify-content: center;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Bouton Voir */
+.view-btn {
+  background: #098163;
+  color: white;
+}
+
+/* Bouton PDF */
+.pdf-btn {
+  background: #1871d8;
+  color: white;
+}
+
+/* Bouton Supprimer */
+.delete-btn {
+  background: #D32F2F;
+  color: white;
+}
+
+/* Icônes */
+.action-btn i {
+  font-size: 14px;
+}

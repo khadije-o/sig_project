@@ -17,7 +17,6 @@ import Registerpage from './components/RegisterPage';
 import Loginpage from './components/LoginPage';
 
 import Main from './main/Main';
-import Settings from './layoutsA/Settings';
 import Pages from './layoutsA/Pages';
 import Products from './layoutsA/Products';
 import Homepage from './components/HomePage';

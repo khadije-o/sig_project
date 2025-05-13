@@ -1,0 +1,130 @@
+
+.form-container {
+  max-width: 1000px;
+  width: 100%;
+  padding: 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.besoin-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  position: relative;
+  background: #f9f9f9;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.remove-btn:hover {
+  color: white;
+  background-color: red;
+} 
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  width: fit-content;
+  margin-left: auto;
+}
+
+.form-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.form-buttons .add-btn {
+    
+  color: #f9f9f9;
+  background-color: #199b6d;
+}
+
+.form-buttons button[type="submit"] {
+    
+  color: #f9f9f9;
+  background-color: #0885d8;
+}
+
+.form-buttons button:hover {
+  background-color: #1c777a;
+  opacity: 0.9;
+}
+
+
+/* Style des boutons d'action */
+.action-buttons {
+  display: flex;
+  gap: 10px; /* Espacement entre les boutons */
+  justify-content: center;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Bouton Voir */
+.view-btn {
+  background: #098163;
+  color: white;
+}
+
+/* Bouton PDF */
+.pdf-btn {
+  background: #1871d8;
+  color: white;
+}
+
+/* Bouton Supprimer */
+.delete-btn {
+  background: #D32F2F;
+  color: white;
+}
+
+/* Icônes */
+.action-btn i {
+  font-size: 14px;
+}
+
+.delete-btn {
+  color: red;
+}

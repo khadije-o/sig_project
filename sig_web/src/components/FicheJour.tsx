@@ -1,14 +1,10 @@
 
 
-
-
-
-
-
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import AuthContext from '../context/AuthContext'; 
+import "../css/FicheForm.css";
 
 interface Designation {
   id: number;
@@ -220,51 +216,108 @@ const FicheDuJour: React.FC = () => {
   };
 
 
+  // const showDetail = (fiche: Fiche) => {
+  //   const besoinsHtml = fiche.besoins
+  //     .map((besoin) => `
+  //       <tr>
+  //         <td>${besoin.designation?.nom || 'N/A'}</td>
+  //         <td>${besoin.quantite || 'N/A'}</td> 
+  //         <td>${besoin.observation || 'Aucune observation'}</td>
+  //         <td>
+  //           <button id="modify-${besoin.id}"><i className="fas fa-file-pdf"></i> </button>
+  //           <button id="delete-${besoin.id}"><i className="fas fa-trash-alt"></i></button>
+  //         </td>
+  //       </tr>
+  //     `)
+  //     .join('');
+  
+  //   Swal.fire({
+  //     title: `Fiche ${fiche.numero} - ${getStatutLabel(fiche.status)}`,
+  //     html: `
+  //       <p><strong>Date de création :</strong> ${fiche.date_fiche}</p>
+  //       <p><strong>Utilisateur :</strong> ${fiche.user.first_name} ${fiche.user.last_name}</p>
+  //       <table border="1" cellpadding="6" cellspacing="0" style="width:100%; text-align:left;">
+  //         <thead>
+  //           <tr>
+  //             <th>Désignation</th>
+  //             <th>Quantité</th>
+  //             <th>Observation</th>
+  //             <th>Actions</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
+  //           ${besoinsHtml}
+  //         </tbody>
+  //       </table>
+  //     `,
+  //     width: '800px',
+  //     showCloseButton: true,
+  //     showConfirmButton: false,
+  //   });
+  
+  //   // Attacher des événements
+  //   fiche.besoins.forEach((besoin) => {
+  //     document.getElementById(`modify-${besoin.id}`)?.addEventListener('click', () => handleModifyBesoin(besoin.id));
+  //     document.getElementById(`delete-${besoin.id}`)?.addEventListener('click', () => handleDeleteBesoin(besoin.id));
+  //   });
+  // };
+
+
   const showDetail = (fiche: Fiche) => {
-    const besoinsHtml = fiche.besoins
-      .map((besoin) => `
-        <tr>
-          <td>${besoin.designation?.nom || 'N/A'}</td>
-          <td>${besoin.quantite || 'N/A'}</td> 
-          <td>${besoin.observation || 'Aucune observation'}</td>
-          <td>
-            <button id="modify-${besoin.id}">✏️</button>
-            <button id="delete-${besoin.id}">🗑️</button>
-          </td>
-        </tr>
-      `)
-      .join('');
-  
-    Swal.fire({
-      title: `Fiche #${fiche.numero} - ${getStatutLabel(fiche.status)}`,
-      html: `
-        <p><strong>Date de création :</strong> ${fiche.date_fiche}</p>
-        <p><strong>Utilisateur :</strong> ${fiche.user.first_name} ${fiche.user.last_name}</p>
-        <table border="1" cellpadding="6" cellspacing="0" style="width:100%; text-align:left;">
-          <thead>
-            <tr>
-              <th>Désignation</th>
-              <th>Quantité</th>
-              <th>Observation</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${besoinsHtml}
-          </tbody>
-        </table>
-      `,
-      width: '800px',
-      showCloseButton: true,
-      showConfirmButton: false,
-    });
-  
-    // Attacher des événements
-    fiche.besoins.forEach((besoin) => {
-      document.getElementById(`modify-${besoin.id}`)?.addEventListener('click', () => handleModifyBesoin(besoin.id));
-      document.getElementById(`delete-${besoin.id}`)?.addEventListener('click', () => handleDeleteBesoin(besoin.id));
-    });
-  };
+  const besoinsHtml = fiche.besoins
+    .map((besoin) => `
+      <tr>
+        <td>${besoin.designation?.nom || 'N/A'}</td>
+        <td>${besoin.quantite || 'N/A'}</td> 
+        <td>${besoin.observation || 'Aucune observation'}</td>
+        <td>
+          <button id="modify-${besoin.id}" class="action-btn">
+            <i class="fas fa-pen-to-square"></i>
+          </button>
+          <button id="delete-${besoin.id}" class="action-btn delete-btn">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    `)
+    .join('');
+
+  Swal.fire({
+    title: `Fiche ${fiche.numero} - ${getStatutLabel(fiche.status)}`,
+    html: `
+      <p><strong>Date de création :</strong> ${fiche.date_fiche}</p>
+      <p><strong>Utilisateur :</strong> ${fiche.user.first_name} ${fiche.user.last_name}</p>
+      <table border="1" cellpadding="6" cellspacing="0" style="width:100%; text-align:left;">
+        <thead>
+          <tr>
+            <th>Désignation</th>
+            <th>Quantité</th>
+            <th>Observation</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${besoinsHtml}
+        </tbody>
+      </table>
+    `,
+    width: '800px',
+    showCloseButton: true,
+    showConfirmButton: false,
+    didOpen: () => {
+      fiche.besoins.forEach((besoin) => {
+        document
+          .getElementById(`modify-${besoin.id}`)
+          ?.addEventListener('click', () => handleModifyBesoin(besoin.id));
+        document
+          .getElementById(`delete-${besoin.id}`)
+          ?.addEventListener('click', () => handleDeleteBesoin(besoin.id));
+      });
+    },
+  });
+};
+
+
 
   return (
     <div>
@@ -291,27 +344,22 @@ const FicheDuJour: React.FC = () => {
                 <td>{getStatutLabel(fiche.status)}</td>
 
                   <td>
-                    <button onClick={() => showDetail(fiche)} title="Détails">
-                      <i className="fas fa-eye"></i>
-                    </button>
-                    
-                    <button onClick={() => downloadPdf(fiche.id)} title="Télécharger PDF">
-                      <i className="fas fa-file-pdf" style={{ color: 'white' }}></i>
-                    </button>
-                     {user?.is_staff && (
-                      <button onClick={() => handleDeleteFiche(fiche.id)} title="Supprimer fiche">
-                        <i className="fas fa-trash-alt" style={{ color: 'darkred' }}></i>
-                      </button>
-                    )}
-                  </td>
-                  
-
-                {/* <td>
-                  <button onClick={() => showDetail(fiche)}>Details de fiche {fiche.id}</button>
-                </td>
-                <td>
-                  <button onClick={() => downloadPdf(fiche.id)}>Télécharger PDF</button>
-                </td> */}
+            <div className="action-buttons">
+              <button className="action-btn view-btn" onClick={() => showDetail(fiche)} title="Détails">
+                <i className="fas fa-eye"></i>
+              </button>
+              
+              <button className="action-btn pdf-btn" onClick={() => downloadPdf(fiche.id)} title="Télécharger PDF">
+                <i className="fas fa-file-pdf"></i>
+              </button>
+              
+              {user?.is_staff && (
+                <button className="action-btn delete-btn" onClick={() => handleDeleteFiche(fiche.id)} title="Supprimer fiche">
+                  <i className="fas fa-trash-alt"></i>
+                </button>
+              )}
+            </div>
+          </td>
               </tr>
             ))
           ) : (

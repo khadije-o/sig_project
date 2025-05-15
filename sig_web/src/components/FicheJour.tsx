@@ -216,53 +216,6 @@ const FicheDuJour: React.FC = () => {
   };
 
 
-  // const showDetail = (fiche: Fiche) => {
-  //   const besoinsHtml = fiche.besoins
-  //     .map((besoin) => `
-  //       <tr>
-  //         <td>${besoin.designation?.nom || 'N/A'}</td>
-  //         <td>${besoin.quantite || 'N/A'}</td> 
-  //         <td>${besoin.observation || 'Aucune observation'}</td>
-  //         <td>
-  //           <button id="modify-${besoin.id}"><i className="fas fa-file-pdf"></i> </button>
-  //           <button id="delete-${besoin.id}"><i className="fas fa-trash-alt"></i></button>
-  //         </td>
-  //       </tr>
-  //     `)
-  //     .join('');
-  
-  //   Swal.fire({
-  //     title: `Fiche ${fiche.numero} - ${getStatutLabel(fiche.status)}`,
-  //     html: `
-  //       <p><strong>Date de création :</strong> ${fiche.date_fiche}</p>
-  //       <p><strong>Utilisateur :</strong> ${fiche.user.first_name} ${fiche.user.last_name}</p>
-  //       <table border="1" cellpadding="6" cellspacing="0" style="width:100%; text-align:left;">
-  //         <thead>
-  //           <tr>
-  //             <th>Désignation</th>
-  //             <th>Quantité</th>
-  //             <th>Observation</th>
-  //             <th>Actions</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-  //           ${besoinsHtml}
-  //         </tbody>
-  //       </table>
-  //     `,
-  //     width: '800px',
-  //     showCloseButton: true,
-  //     showConfirmButton: false,
-  //   });
-  
-  //   // Attacher des événements
-  //   fiche.besoins.forEach((besoin) => {
-  //     document.getElementById(`modify-${besoin.id}`)?.addEventListener('click', () => handleModifyBesoin(besoin.id));
-  //     document.getElementById(`delete-${besoin.id}`)?.addEventListener('click', () => handleDeleteBesoin(besoin.id));
-  //   });
-  // };
-
-
   const showDetail = (fiche: Fiche) => {
   const besoinsHtml = fiche.besoins
     .map((besoin) => `

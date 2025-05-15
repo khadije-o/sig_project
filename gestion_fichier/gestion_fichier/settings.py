@@ -94,7 +94,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sig_mpn',
         'USER': 'postgres',
-        'PASSWORD': 'psql1771',
+        'PASSWORD': '49468724',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -226,3 +226,6 @@ JAZZMIN_UI_TWEAKS = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

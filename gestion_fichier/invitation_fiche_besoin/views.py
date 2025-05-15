@@ -385,6 +385,20 @@ class InvitationFicheBesoinViewSet(viewsets.ModelViewSet):
 
 
 
+from bidi import get_display
+from rest_framework import viewsets
+from .models import InvitationFicheBesoin
+from .serializers import InvitationFicheBesoinSerializer
+
+class InvitationFicheBesoinViewSet(viewsets.ModelViewSet):
+    queryset = InvitationFicheBesoin.objects.all()
+    serializer_class = InvitationFicheBesoinSerializer
+
+
+
+
+
+
 
 
 from django.http import HttpResponse
@@ -457,7 +471,7 @@ def pdf_invitation_offre(request, invitation_id=None):
 
     arabic_bold_style = ParagraphStyle(
         name="ArabicBold",
-        fontName="Amiri-Bold",  # <- Utilise la version en gras
+        fontName="Amiri-Bold", 
         fontSize=11,
         leading=14,
         alignment=TA_CENTER
@@ -500,49 +514,50 @@ def pdf_invitation_offre(request, invitation_id=None):
     # Bloc de droite - Format amélioré avec texte centré et en gras
     right_content = [
     Paragraph(format_arabic("<b>الجمهورية الإسلامية الموريتانية</b>"), 
-              ParagraphStyle(name="RightArabic1", parent=arabic_style, alignment=TA_CENTER, spaceAfter=0)),
+              ParagraphStyle(name="RightArabic1", parent=arabic_style, alignment=TA_CENTER, spaceAfter=0, spaceBefore=0, leading=11)),
     Paragraph(format_arabic("<b>شرف - إخاء - عدل</b>"), 
-              ParagraphStyle(name="RightArabic2", parent=arabic_style, alignment=TA_CENTER, spaceAfter=3)),
+              ParagraphStyle(name="RightArabic2", parent=arabic_style, alignment=TA_CENTER, spaceAfter=2, spaceBefore=0, leading=11)),
     Paragraph("<b>République Islamique de Mauritanie</b>", 
-              ParagraphStyle(name="RightFrench1", parent=centered_style, spaceAfter=0)),
+              ParagraphStyle(name="RightFrench1", parent=centered_style, spaceAfter=1)),
     Paragraph("<b>Honneur - Fraternité - Justice</b>", 
               ParagraphStyle(name="RightFrench2", parent=centered_style, spaceAfter=3)),
 
-    Spacer(1, 6),  # Espace plus petit qu'avant
-
-    format_arabic("Nouakchott, le_________________\n انواكشوط، في"),
 
     Paragraph(
-        "<b>N°</b> _________" + format_arabic("<b>الرقم</b>"),
-        ParagraphStyle(name="MixedLine2", parent=french_style, alignment=TA_CENTER, spaceAfter=0)
-    ),
+    format_arabic("<b>Nouakchott, le_________________    انواكشوط، في</b>"),
+    ParagraphStyle(name="RightLine1", parent=arabic_style, alignment=TA_CENTER, spaceAfter=1)
+),
+Paragraph(
+    format_arabic("<b>N°_________________    الرقم</b>"),
+    ParagraphStyle(name="RightLine2", parent=arabic_style, alignment=TA_CENTER, spaceAfter=2)
+),
+
+
 ]
-
-
-    # Texte mixte avec formatage correct de l'arabe
-    chef_dept_text = format_arabic("Chef de Département \n    رئيس القطاع")
-    admin_financier_text = format_arabic("Administratif et Financier \n    الإداري والمالي</b>")
 
     left_content = [
         Paragraph(format_arabic("<b>وزارة الصيد والبنى التحتية البحرية والمينائية</b>"), 
-                ParagraphStyle(name="LeftArabic", parent=arabic_style, alignment=TA_CENTER)),
+                ParagraphStyle(name="LeftArabic", parent=arabic_style, alignment=TA_CENTER, spaceAfter=0, spaceBefore=0, leading=11)),
         Paragraph("<b>Ministère de la Pêche, des Infrastructures Maritimes et Portuaires</b>", 
-                ParagraphStyle(name="LeftFrench", parent=centered_style)),
+                ParagraphStyle(name="LeftFrench", parent=centered_style, spaceAfter=2)),
         Paragraph(format_arabic("<b>سوق السمك بانواكشوط</b>"), 
-                ParagraphStyle(name="LeftArabic2", parent=arabic_style, alignment=TA_CENTER)),
+                ParagraphStyle(name="LeftArabic2", parent=arabic_style, alignment=TA_CENTER, spaceAfter=0, spaceBefore=0, leading=11)),
         Paragraph("<b>Marché au Poisson de Nouakchott</b>", 
-                ParagraphStyle(name="LeftFrench2", parent=centered_style)),
+                ParagraphStyle(name="LeftFrench2", parent=centered_style, spaceAfter=2)),
         Spacer(1, 12),
-        
-        # ✅ Paragraphs corrigés
-        Paragraph(chef_dept_text, ParagraphStyle(name="MixedLineChef", parent=french_style, alignment=TA_CENTER)),
-        Paragraph(admin_financier_text, ParagraphStyle(name="MixedLineAdmin", parent=french_style, alignment=TA_CENTER)),
 
-
+        Paragraph(
+    format_arabic("<b>Chef de Département    رئيس القطاع</b>"),
+        ParagraphStyle(name="LeftLine1", parent=arabic_style, alignment=TA_CENTER, spaceAfter=0, spaceBefore=0, leading=11)
+            ),
+        Paragraph(
+            format_arabic("<b>Administratif et Financier    الإداري والمالي</b>"),
+            ParagraphStyle(name="LeftLine2", parent=arabic_style, alignment=TA_CENTER, spaceAfter=2, spaceBefore=0, leading=11)
+        ),
 
     ]
-    signature_text = format_arabic("Nouakchott, le_________________\n انواكشوط، في")
-    elements.append(Paragraph(signature_text, mixed_style))
+
+
 
     # Construction du header avec logo au centre
     header_table = Table([
@@ -555,7 +570,7 @@ def pdf_invitation_offre(request, invitation_id=None):
 
     header_table.setStyle(TableStyle([
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('LEFTPADDING', (0, 0), (-1, -1), 0),
         ('RIGHTPADDING', (0, 0), (-1, -1), 0),
         ('TOPPADDING', (0, 0), (-1, -1), 0),
@@ -588,14 +603,17 @@ def pdf_invitation_offre(request, invitation_id=None):
 
     table = Table(data, colWidths=[60, 300, 120], repeatRows=1)
     table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#3498db")),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('GRID', (0, 0), (-1, -1), 0.5, colors.lightgrey),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('FONTSIZE', (0, 0), (-1, -1), 10),
-    ]))
+    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor("#3498db")),
+    ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+    ('ALIGN', (0, 0), (0, -1), 'CENTER'),  # Quantité centrée
+    ('ALIGN', (1, 1), (1, -1), 'LEFT'),    # Désignation alignée à gauche
+    ('ALIGN', (2, 0), (2, -1), 'LEFT'),  # Spécifications LEFT
+    ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ('GRID', (0, 0), (-1, -1), 0.5, colors.lightgrey),
+    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+    ('FONTSIZE', (0, 0), (-1, -1), 10),
+]))
+
 
     elements.append(table)
     elements.append(Spacer(1, 20))
@@ -605,7 +623,7 @@ def pdf_invitation_offre(request, invitation_id=None):
     elements.append(Paragraph(f"<b>Délai de livraison :</b> {invitation.delai_offre} jours", french_style))
     elements.append(Spacer(1, 30))
 
-    signature_text = format_arabic("Nouakchott, le_________________\n انواكشوط، في")
+    signature_text = "Le directeur"
     elements.append(Paragraph(signature_text, mixed_style))
 
 

@@ -30,6 +30,7 @@ import Consolidation from './layouts/admin/layouts/Consolidation';
 import GroupFicheBesoins from './layouts/admin/layouts/GroupFicheBesoins';
 import GestionUsers from './layouts/admin/layouts/GestionUsers';
 import FournisseurContainer from './layouts/admin/layouts/FournisseurContainer';
+import MesDevis from './layouts/admin/layouts/MesDevis';
 
 
 function AppContent() {
@@ -86,6 +87,7 @@ function AppContent() {
           <Route path="/products" element={<Products />} />
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/fournisseur" element={<FournisseurContainer />} />
+          <Route path="/mes-devis" element={<MesDevis />} />
         </Route>
       </Routes>
     </Fragment>

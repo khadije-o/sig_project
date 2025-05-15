@@ -160,7 +160,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
   
       if (decodedUser.is_staff) {
-        navigate("/virement");
+        navigate("/fishebesoinsAdmin");
       } else {
         navigate("/fishebesoinsUser");
       }

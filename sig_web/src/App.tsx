@@ -31,6 +31,7 @@ import GroupFicheBesoins from './layouts/admin/layouts/GroupFicheBesoins';
 import GestionUsers from './layouts/admin/layouts/GestionUsers';
 import FournisseurContainer from './layouts/admin/layouts/FournisseurContainer';
 import MesDevis from './layouts/admin/layouts/MesDevis';
+import MesProfils from './components/MesProfils';
 
 
 function AppContent() {
@@ -88,6 +89,7 @@ function AppContent() {
           <Route path="/homepage" element={<Homepage />} />
           <Route path="/fournisseur" element={<FournisseurContainer />} />
           <Route path="/mes-devis" element={<MesDevis />} />
+          <Route path="/mes-profils" element={<MesProfils />} />
         </Route>
       </Routes>
     </Fragment>

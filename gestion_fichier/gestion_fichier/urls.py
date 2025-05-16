@@ -32,6 +32,7 @@ urlpatterns = [
     path('invitation_fiche_besoin/', include('invitation_fiche_besoin.urls')), 
     path('designation/', include('designation.urls')),  
     path('fiches_besoin/fiches_besoin/', include('besoins.urls')),
+    path('api/users/', include('users.urls')),
 
 
     

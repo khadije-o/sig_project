@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import '../../../css/devis.css';
 
 interface Fournisseur {
   id: number;
@@ -233,129 +232,241 @@ const handleUpdateDevisLignes = (devis: DevisGlobal) => {
 
 
 
-  return (
-    <div className="p-4">
-      <button onClick={handleRetour} style={{ marginBottom: "20px" }}>
-        ← 
-      </button>
-      <h2 className="text-xl font-bold mb-4">Mes Devis</h2>
+//   return (
+//     <div className="page-container">
+//       <button onClick={handleRetour} style={{ marginBottom: "20px" }}>
+//         ← 
+//       </button>
+//       <h2 className="text-xl font-bold mb-4">Mes Devis</h2>
 
-      <input
-        type="text"
-        placeholder="Rechercher par numéro ou nom d'entreprise"
-        className="border rounded p-2 w-full mb-4"
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-      />
+//       <input
+//         type="text"
+//         placeholder="Rechercher par numéro ou nom d'entreprise"
+//         className="border rounded p-2 w-full mb-4"
+//         value={search}
+//         onChange={e => setSearch(e.target.value)}
+//       />
 
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border p-2">Numéro</th>
-            <th className="border p-2">Fournisseur</th>
-            <th className="border p-2">Date</th>
-            <th className="border p-2">Total TTC</th>
-            <th className="border p-2">Actions</th>
+//       <table className="w-full border-collapse border border-gray-300">
+//         <thead>
+//           <tr className="bg-gray-100">
+//             <th className="border p-2">Numéro</th>
+//             <th className="border p-2">Fournisseur</th>
+//             <th className="border p-2">Date</th>
+//             <th className="border p-2">Total TTC</th>
+//             <th className="border p-2">Actions</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {filteredDevis.map(devis => (
+//             <tr key={devis.id} className="border">
+//               <td className="border p-2">{devis.numero}</td>
+//               <td className="border p-2">{devis.fournisseur.nom_entreprise}</td>
+//               <td className="border p-2">{devis.date}</td>
+//               <td className="border p-2">{devis.total_ttc.toFixed(2)} MRU</td>
+//               <td className="border p-2 space-x-2">
+//   <button
+//     className="text-blue-500 hover:text-blue-700"
+//     onClick={() => setSelectedDevis(devis)}
+//     title="Voir les détails"
+//   >
+//     <i className="fas fa-eye"></i>
+//   </button>
+
+//   <button
+//     className="text-green-500 hover:text-green-700"
+//     onClick={() => handleUpdateDevisLignes(devis)}
+//     title="Modifier"
+//   >
+//     <i className="fal fa-pen-to-square"></i>
+//   </button>
+
+//   <button
+//     className="text-red-500 hover:text-red-700"
+//     onClick={() => handleDelete(devis.id)}
+//     title="Supprimer"
+//   >
+//     <i className="fal fa-trash-alt"></i>
+//   </button>
+
+//   <button
+//     className="text-purple-500 hover:text-purple-700"
+//     onClick={() => {
+//       if (devis.piece_jointe) {
+//         window.open(devis.piece_jointe, "_blank");
+//       } else {
+//         Swal.fire("Aucune pièce jointe", "Ce devis ne contient pas de fichier joint.", "info");
+//       }
+//     }}
+//     title="Voir la pièce jointe"
+//   >
+//     <i className="fas fa-file-pdf"></i>
+//   </button>
+// </td>
+
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+
+//       {selectedDevis && (
+//         <div className="detail-card">
+//           <h3 className="text-lg font-semibold mb-2">
+//             Détails du devis {selectedDevis.numero}
+//           </h3>
+//           <div className="detail-grid">
+//           <p><strong>Fournisseur :</strong> {selectedDevis.fournisseur.nom_entreprise}</p>
+//           <p><strong>Téléphone :</strong> {selectedDevis.fournisseur.telephone}</p>
+//           <p><strong>Email :</strong> {selectedDevis.fournisseur.email}</p>
+//           <p><strong>NIF :</strong> {selectedDevis.fournisseur.nif}</p>
+//           <p><strong>RC :</strong> {selectedDevis.fournisseur.rc}</p>
+//           <p><strong>Compte bancaire :</strong> {selectedDevis.fournisseur.compte_bancaire}</p>
+//           </div>
+
+//           <table className="table">
+//             <thead>
+//               <tr className="bg-gray-100">
+//                 <th className="border p-2">Désignation</th>
+//                 <th className="border p-2">Quantité</th>
+//                 <th className="border p-2">Prix Unitaire</th>
+//                 <th className="border p-2">Prix Total</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {selectedDevis.lignes.map(ligne => (
+//                 <tr key={ligne.id}>
+//                  <td className="border p-2">
+//   {typeof ligne.designation === 'object'
+//     ? ligne.designation.nom
+//     : getDesignationName(ligne.designation)}
+// </td>
+//                   <td className="border p-2">{ligne.quantite}</td>
+//                   <td className="border p-2">{ligne.prix_unitaire.toFixed(2)} MRU</td>
+//                   <td className="border p-2">{ligne.prix_total.toFixed(2)} MRU</td>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+
+//           <div className="detail-total">
+//             <p><strong>Total HT :</strong> {selectedDevis.total_ht.toFixed(2)} MRU</p>
+//             <p><strong>TVA ({selectedDevis.tva}%) :</strong> {selectedDevis.montant_tva.toFixed(2)} MRU</p>
+//             <p><strong>Total TTC :</strong> {selectedDevis.total_ttc.toFixed(2)} MRU</p>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+
+
+return (
+  <div className="page-container">
+    <button onClick={handleRetour} className="btn-retour">
+      ←
+    </button>
+
+    <h2>Mes Devis</h2>
+
+    <input
+      type="text"
+      placeholder="Rechercher par numéro ou nom d'entreprise"
+      className="search-input"
+      value={search}
+      onChange={e => setSearch(e.target.value)}
+    />
+
+    <table className="table">
+      <thead>
+        <tr>
+          <th>Numéro</th>
+          <th>Fournisseur</th>
+          <th>Date</th>
+          <th>Total TTC</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {filteredDevis.map(devis => (
+          <tr key={devis.id}>
+            <td>{devis.numero}</td>
+            <td>{devis.fournisseur.nom_entreprise}</td>
+            <td>{devis.date}</td>
+            <td>{devis.total_ttc.toFixed(2)} MRU</td>
+            <td className="action-buttons">
+              <button onClick={() => setSelectedDevis(devis)} title="Voir les détails">
+                <i className="fas fa-eye"></i>
+              </button>
+              <button onClick={() => handleUpdateDevisLignes(devis)} title="Modifier">
+                <i className="fal fa-pen-to-square"></i>
+              </button>
+              <button onClick={() => handleDelete(devis.id)} title="Supprimer">
+                <i className="fal fa-trash-alt"></i>
+              </button>
+              <button
+                onClick={() => {
+                  if (devis.piece_jointe) {
+                    window.open(devis.piece_jointe, "_blank");
+                  } else {
+                    Swal.fire("Aucune pièce jointe", "Ce devis ne contient pas de fichier joint.", "info");
+                  }
+                }}
+                title="Voir la pièce jointe"
+              >
+                <i className="fas fa-file-pdf"></i>
+              </button>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {filteredDevis.map(devis => (
-            <tr key={devis.id} className="border">
-              <td className="border p-2">{devis.numero}</td>
-              <td className="border p-2">{devis.fournisseur.nom_entreprise}</td>
-              <td className="border p-2">{devis.date}</td>
-              <td className="border p-2">{devis.total_ttc.toFixed(2)} MRU</td>
-              <td className="border p-2 space-x-2">
-  <button
-    className="text-blue-500 hover:text-blue-700"
-    onClick={() => setSelectedDevis(devis)}
-    title="Voir les détails"
-  >
-    <i className="fas fa-eye"></i>
-  </button>
+        ))}
+      </tbody>
+    </table>
 
-  <button
-    className="text-green-500 hover:text-green-700"
-    onClick={() => handleUpdateDevisLignes(devis)}
-    title="Modifier"
-  >
-    <i className="fal fa-pen-to-square"></i>
-  </button>
-
-  <button
-    className="text-red-500 hover:text-red-700"
-    onClick={() => handleDelete(devis.id)}
-    title="Supprimer"
-  >
-    <i className="fal fa-trash-alt"></i>
-  </button>
-
-  <button
-    className="text-purple-500 hover:text-purple-700"
-    onClick={() => {
-      if (devis.piece_jointe) {
-        window.open(devis.piece_jointe, "_blank");
-      } else {
-        Swal.fire("Aucune pièce jointe", "Ce devis ne contient pas de fichier joint.", "info");
-      }
-    }}
-    title="Voir la pièce jointe"
-  >
-    <i className="fas fa-file-pdf"></i>
-  </button>
-</td>
-
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {selectedDevis && (
-        <div className="mt-6 border-t pt-4">
-          <h3 className="text-lg font-semibold mb-2">
-            Détails du devis {selectedDevis.numero}
-          </h3>
+    {selectedDevis && (
+      <div className="detail-card">
+        <h3>Détails du devis {selectedDevis.numero}</h3>
+        <div className="detail-grid">
           <p><strong>Fournisseur :</strong> {selectedDevis.fournisseur.nom_entreprise}</p>
           <p><strong>Téléphone :</strong> {selectedDevis.fournisseur.telephone}</p>
           <p><strong>Email :</strong> {selectedDevis.fournisseur.email}</p>
           <p><strong>NIF :</strong> {selectedDevis.fournisseur.nif}</p>
           <p><strong>RC :</strong> {selectedDevis.fournisseur.rc}</p>
           <p><strong>Compte bancaire :</strong> {selectedDevis.fournisseur.compte_bancaire}</p>
-
-          <table className="w-full border-collapse mt-4 border border-gray-300">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border p-2">Désignation</th>
-                <th className="border p-2">Quantité</th>
-                <th className="border p-2">Prix Unitaire</th>
-                <th className="border p-2">Prix Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedDevis.lignes.map(ligne => (
-                <tr key={ligne.id}>
-                 <td className="border p-2">
-  {typeof ligne.designation === 'object'
-    ? ligne.designation.nom
-    : getDesignationName(ligne.designation)}
-</td>
-                  <td className="border p-2">{ligne.quantite}</td>
-                  <td className="border p-2">{ligne.prix_unitaire.toFixed(2)} MRU</td>
-                  <td className="border p-2">{ligne.prix_total.toFixed(2)} MRU</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <div className="mt-4">
-            <p><strong>Total HT :</strong> {selectedDevis.total_ht.toFixed(2)} MRU</p>
-            <p><strong>TVA ({selectedDevis.tva}%) :</strong> {selectedDevis.montant_tva.toFixed(2)} MRU</p>
-            <p><strong>Total TTC :</strong> {selectedDevis.total_ttc.toFixed(2)} MRU</p>
-          </div>
         </div>
-      )}
-    </div>
-  );
+
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Désignation</th>
+              <th>Quantité</th>
+              <th>Prix Unitaire</th>
+              <th>Prix Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {selectedDevis.lignes.map(ligne => (
+              <tr key={ligne.id}>
+                <td>
+                  {typeof ligne.designation === 'object'
+                    ? ligne.designation.nom
+                    : getDesignationName(ligne.designation)}
+                </td>
+                <td>{ligne.quantite}</td>
+                <td>{ligne.prix_unitaire.toFixed(2)} MRU</td>
+                <td>{ligne.prix_total.toFixed(2)} MRU</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="detail-total">
+          <p><strong>Total HT :</strong> {selectedDevis.total_ht.toFixed(2)} MRU</p>
+          <p><strong>TVA ({selectedDevis.tva}%) :</strong> {selectedDevis.montant_tva.toFixed(2)} MRU</p>
+          <p><strong>Total TTC :</strong> {selectedDevis.total_ttc.toFixed(2)} MRU</p>
+        </div>
+      </div>
+    )}
+  </div>
+);
+
 };
 
 export default MesDevis;

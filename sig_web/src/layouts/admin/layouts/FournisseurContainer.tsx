@@ -2,7 +2,7 @@ import { useEffect, useState, FormEvent, useContext } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import AuthContext from '../../../context/AuthContext';
-import '../../../css/LoginPage.css'; // Même style que GestionUsers
+import '../../../css/devis.css'; 
 
 interface Fournisseur {
   id?: number;

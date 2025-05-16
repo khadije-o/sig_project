@@ -97,3 +97,25 @@ def user_detail(request, pk):
     elif request.method == 'DELETE':
         user.delete()
         return Response({'message': 'Utilisateur supprimé.'}, status=204)
+    
+
+
+@api_view(['GET', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    user = request.user
+
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    elif request.method == 'PATCH':
+        # Créez une copie mutable des données pour supprimer is_staff si présent
+        data = request.data.copy()
+        data.pop('is_staff', None)  # Supprime is_staff s'il est présent
+        
+        serializer = UserSerializer(user, data=data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)

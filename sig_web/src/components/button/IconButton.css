@@ -1,0 +1,46 @@
+.icon-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  margin-right: 8px;
+  color: #333;
+  font-size: 16px;
+  border-radius: 6px;
+  transition: color 0.2s, transform 0.2s, background-color 0.2s;
+}
+
+/* Hover général */
+.icon-button:hover {
+  transform: scale(1.1);
+}
+
+/* Modifier */
+.icon-button--edit {
+  background-color: #f0f0f0;
+}
+
+.icon-button--edit:hover {
+  color: #7d93aa;
+  background-color: #e0e0e0;
+}
+
+/* Supprimer */
+.icon-button--danger {
+  background-color: #fbeaea;
+}
+
+.icon-button--danger:hover {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+
+/* Créer */
+.icon-button--success {
+  background-color: #e7f0ff;
+}
+
+.icon-button--success:hover {
+  color: #396cad;
+ background-color: #d1e4ff;
+}

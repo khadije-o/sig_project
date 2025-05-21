@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../../context/AuthContext";
-import FicheForm from "../../../components/FicheForm";
-import FicheDuJour from "../../../components/FicheJour";
+import FicheForm from "../../../components/FicheForm/FicheForm";
+import FicheDuJour from "../../../components/FicheDuJour/FicheDuJour";
 
 const FisheBesoinsAdmin = () => {
   const navigate = useNavigate();

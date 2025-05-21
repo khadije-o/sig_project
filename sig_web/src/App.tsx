@@ -13,25 +13,25 @@ import {
 
 import AuthContext, { AuthProvider } from './context/AuthContext';
 
-import Registerpage from './components/RegisterPage';
-import Loginpage from './components/LoginPage';
+import Registerpage from './pages/RegisterPage';
+import Loginpage from './pages/LoginPage';
 
 import Main from './main/Main';
-import Products from './layoutsA/Products';
-import Homepage from './components/HomePage';
-import Designation from './layouts/admin/layouts/Designation';
-import BonDeComnd from './layouts/admin/layouts/BonDeComnd';
 import Virement from './layouts/admin/layouts/Virement';
 import SideBarRouter from './components/SideBarRouter';
 import FisheBesoinsAdmin from './layouts/admin/layouts/AdminFisheBesoins';
 import FisheBesoinsUser from './layouts/user/layouts/UserFisheBesoins';
-import Devis from './layouts/admin/layouts/Devis';
-import Consolidation from './layouts/admin/layouts/Consolidation';
+import Devis from './pages/Devis';
 import GroupFicheBesoins from './layouts/admin/layouts/GroupFicheBesoins';
 import GestionUsers from './layouts/admin/layouts/GestionUsers';
-import FournisseurContainer from './layouts/admin/layouts/FournisseurContainer';
-import MesDevis from './layouts/admin/layouts/MesDevis';
+import MesDevis from './components/Devis/MesDevis';
 import MesProfils from './components/MesProfils';
+import DesignationPage from './pages/Designation/DesignationPage';
+import ConsolidationPage from './pages/ConsolidationPage';
+import FournisseurContainer from './components/Fournisseur/FournisseurContainer';
+import BonCommandeList from './components/BonDeCommande/BonCommandeList';
+import BonCommandeDetail from './components/BonDeCommande/BonCommandeDetail';
+import BonCommandeDetailWrapper from './pages/BonCommandeDetailWrapper';
 
 
 function AppContent() {
@@ -78,18 +78,18 @@ function AppContent() {
         >
           <Route path="/fishebesoinsAdmin" element={<FisheBesoinsAdmin />} />
           <Route path="/fishebesoinsUser" element={<FisheBesoinsUser />} />
-          <Route path="/designation" element={<Designation />} />
-          <Route path="/consolidation" element={<Consolidation />} />
-          <Route path="/bondecomnd" element={<BonDeComnd />} />
+          <Route path="/designation" element={<DesignationPage />} />
+          <Route path="/consolidation" element={<ConsolidationPage />} />
+          <Route path="/bondecomnd" element={<BonCommandeList />} />
           <Route path="/virement" element={<Virement />} />
           <Route path="/devis" element={<Devis />} />
           <Route path="/groupfichebesoins" element={<GroupFicheBesoins />} />
           <Route path="/gestionusers" element={<GestionUsers />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/homepage" element={<Homepage />} />
           <Route path="/fournisseur" element={<FournisseurContainer />} />
           <Route path="/mes-devis" element={<MesDevis />} />
+          <Route path="/boncommande/:id" element={<BonCommandeDetailWrapper />}/>
           <Route path="/mes-profils" element={<MesProfils />} />
+          
         </Route>
       </Routes>
     </Fragment>

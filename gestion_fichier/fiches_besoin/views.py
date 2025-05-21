@@ -117,7 +117,7 @@ def pdf_fiche_besoin(request, fiche_id=None):
             data.append([
                 str(besoin.quantite),
                 besoin.designation.nom if besoin.designation else "N/A",
-                besoin.observation or "-"
+                besoin.observation or ""
             ])
 
         table = Table(data, colWidths=[80, 300, 100])

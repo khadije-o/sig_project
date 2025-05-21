@@ -25,6 +25,7 @@ interface User {
   id: number;
   first_name: string;
   last_name: string;
+  is_staff: boolean; // ✅ ajoutez ceci
 }
 
 interface Fiche {
@@ -52,36 +53,55 @@ const FicheGroup: React.FC = () => {
     return statuts[status] || status;
   };
 
-  useEffect(() => {
-    const fetchFiches = async () => {
-      if (!authTokens || !user) return;
+useEffect(() => {
+  const fetchFiches = async () => {
+    if (!authTokens || !user) return;
 
-      try {
-        const res = await axios.get('http://localhost:8000/fiches_besoin/fiches_besoin/', {
-          headers: {
-            Authorization: `Bearer ${authTokens.access}`,
-          },
-        });
+    try {
+      const res = await axios.get('http://localhost:8000/fiches_besoin/fiches_besoin/', {
+        headers: {
+          Authorization: `Bearer ${authTokens.access}`,
+        },
+      });
 
-        const allFiches: Fiche[] = res.data;
+      const allFiches: Fiche[] = res.data;
 
-        if (user.is_staff) {
-          // Pour les admins, on montre toutes les fiches en attente
-          const pendingFiches = allFiches.filter(fiche => fiche.status === 'En attente');
-          setFiches(pendingFiches);
-        } else {
-          // Pour les non-admins, on montre seulement leurs fiches
-          const userFiches = allFiches.filter(fiche => fiche.user.id === user.user_id);
-          setFiches(userFiches);
-        }
-      } catch (err) {
-        console.error(err);
-        setError('Erreur lors du chargement des fiches.');
+      if (user.is_staff) {
+  // Fiches créées par l'admin connecté, avec statut "en attente"
+  const adminOwnFiches = allFiches.filter(
+    fiche =>
+      fiche.user.id === user.user_id &&
+      fiche.status === 'En attente'
+  );
+
+  // Fiches des autres utilisateurs (non-admins), avec statut "en attente"
+  const nonAdminFiches = allFiches.filter(
+    fiche =>
+      !fiche.user.is_staff &&
+      fiche.status === 'En attente'
+  );
+
+  setFiches([...adminOwnFiches, ...nonAdminFiches]);
+} else {
+  // Fiches du user non-admin connecté, avec statut "en attente"
+  const userFiches = allFiches.filter(
+    fiche =>
+      fiche.user.id === user.user_id &&
+      fiche.status === 'En attente'
+  );
+
+  setFiches(userFiches);
+
+
       }
-    };
+    } catch (err) {
+      console.error(err);
+      setError('Erreur lors du chargement des fiches.');
+    }
+  };
 
-    fetchFiches();
-  }, [authTokens, user]);
+  fetchFiches();
+}, [authTokens, user]);
 
   const toggleSelectFiche = (ficheId: number) => {
     setSelectedFiches((prev) =>
@@ -117,6 +137,8 @@ const FicheGroup: React.FC = () => {
         '<input id="swal-valeur" class="swal2-input" placeholder="Valeur offre (en DA)">' +
         '<input id="swal-delai" class="swal2-input" placeholder="Délai (en jours)">',
       focusConfirm: false,
+      showCancelButton: true,   
+      cancelButtonText: 'Annuler', 
       preConfirm: () => {
         const valeur = parseInt((document.getElementById('swal-valeur') as HTMLInputElement).value);
         const delai = parseInt((document.getElementById('swal-delai') as HTMLInputElement).value);
@@ -168,16 +190,16 @@ const FicheGroup: React.FC = () => {
         const allSuccess = results.every(result => result);
 
         if (allSuccess) {
-          Swal.fire('Succès', 'Invitation créée et fiches mises à jour avec succès.', 'success');
+          await Swal.fire('Succès', 'Invitation créée et fiches mises à jour avec succès.', 'success');
           setSelectedFiches([]);
           // Recharger les fiches
           window.location.reload();
         } else {
-          Swal.fire('Avertissement', 'Invitation créée mais certaines fiches n\'ont pas pu être mises à jour.', 'warning');
+          await Swal.fire('Avertissement', 'Invitation créée mais certaines fiches n\'ont pas pu être mises à jour.', 'warning');
         }
       } catch (err) {
         console.error(err);
-        Swal.fire('Erreur', 'Échec de la création de l\'invitation.', 'error');
+        await Swal.fire('Erreur', 'Échec de la création de l\'invitation.', 'error');
       }
     }
   };
@@ -235,13 +257,13 @@ const FicheGroup: React.FC = () => {
         <tr>
           <td>${besoin.designation?.nom || 'N/A'}</td>
           <td>${besoin.quantite || 'N/A'}</td> 
-          <td>${besoin.observation || 'Aucune observation'}</td>
+          <td>${besoin.observation || ''}</td>
         </tr>
       `)
       .join('');
 
     Swal.fire({
-      title: `Fiche #${fiche.numero} - ${getStatutLabel(fiche.status)}`,
+      title: `Fiche ${fiche.numero} - ${getStatutLabel(fiche.status)}`,
       html: `
         <p><strong>Date de création :</strong> ${fiche.date_fiche}</p>
         <p><strong>Utilisateur :</strong> ${fiche.user.first_name} ${fiche.user.last_name}</p>

@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'invitations_offre',
     'invitation_fiche_besoin',
     'users',
+    'boncommande',
     'rest_framework_simplejwt.token_blacklist',
+
     
 ]
 

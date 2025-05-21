@@ -1,72 +1,4 @@
 
-# from rest_framework import serializers
-# from devisglobal.models import DevisGlobal
-# from devisligne.models import DevisLigne
-# from devisligne.serializer import DevisLigneSerializer, DevisLigneCreateSerializer, DevisLigneUpdateSerializer
-# from fournisseur.serializers import FournisseurSerializer
-# from fournisseur.models import Fournisseur
-
-
-# class DevisGlobalCreateSerializer(serializers.ModelSerializer):
-#     lignes = DevisLigneCreateSerializer(many=True, write_only=True)
-#     piece_jointe = serializers.FileField(required=False, allow_null=True)
-
-#     class Meta:
-#         model = DevisGlobal
-#         fields = '__all__'
-
-#     def create(self, validated_data):
-#         lignes_data = validated_data.pop('lignes', [])
-#         piece_jointe = validated_data.pop('piece_jointe', None)
-#         devis = DevisGlobal.objects.create(
-#             **validated_data,
-#             piece_jointe=piece_jointe
-#         )
-
-#         for ligne_data in lignes_data:
-#             DevisLigne.objects.create(devis=devis, **ligne_data)
-
-#         devis.calculer_totaux()
-#         return devis
-
-
-# class DevisGlobalSerializer(serializers.ModelSerializer):
-#     fournisseur = FournisseurSerializer(read_only=True)  # On n'update pas le fournisseur ici
-#     lignes = DevisLigneUpdateSerializer(many=True, required=False)
-
-#     class Meta:
-#         model = DevisGlobal
-#         fields = '__all__'
-
-#     def update(self, instance, validated_data):
-#         # On récupère les données des lignes s'il y en a
-#         lignes_data = validated_data.pop('lignes', None)
-
-#         # Mise à jour des champs simples
-#         for attr, value in validated_data.items():
-#             setattr(instance, attr, value)
-#         instance.save()
-
-#         if lignes_data:
-#             existing_ids = [l.id for l in instance.lignes.all()]
-#             updated_ids = []
-
-#             for ligne_data in lignes_data:
-#                 ligne_id = ligne_data.get('id')
-#                 if ligne_id in existing_ids:
-#                     ligne = DevisLigne.objects.get(id=ligne_id, devis=instance)
-#                     ligne.designation_id = ligne_data.get('designation', ligne.designation_id)
-#                     ligne.quantite = ligne_data.get('quantite', ligne.quantite)
-#                     ligne.prix_unitaire = ligne_data.get('prix_unitaire', ligne.prix_unitaire)
-#                     ligne.prix_total = ligne_data.get('prix_total', ligne.prix_total)
-#                     ligne.save()
-#                     updated_ids.append(ligne_id)
-
-#         return instance
-
-
-
-
 
 
 from django.core.files.base import ContentFile
@@ -75,8 +7,9 @@ import uuid
 from rest_framework import serializers
 from devisglobal.models import DevisGlobal
 from devisligne.models import DevisLigne
-from devisligne.serializer import DevisLigneCreateSerializer, DevisLigneUpdateSerializer
+from devisligne.serializer import DevisLigneCreateSerializer, DevisLigneSerializer, DevisLigneUpdateSerializer
 from fournisseur.serializers import FournisseurSerializer
+from boncommande.serializers import BonCommandeSerializer
 
 class DevisGlobalCreateSerializer(serializers.ModelSerializer):
     lignes = serializers.ListField(
@@ -126,38 +59,40 @@ class DevisGlobalCreateSerializer(serializers.ModelSerializer):
         devis.calculer_totaux()
         return devis
 
+
+
+
+
 class DevisGlobalSerializer(serializers.ModelSerializer):
-    fournisseur = FournisseurSerializer(read_only=True)  # On n'update pas le fournisseur ici
-    lignes = DevisLigneUpdateSerializer(many=True, required=False)
+    fournisseur = FournisseurSerializer(read_only=True)
+    bon_commande = BonCommandeSerializer(read_only=True)
+
+    lignes = DevisLigneSerializer(many=True, read_only=True)  # Pour lecture
+    lignes_update = DevisLigneUpdateSerializer(many=True, write_only=True, required=False)  # Pour mise à jour
 
     class Meta:
         model = DevisGlobal
         fields = '__all__'
 
     def update(self, instance, validated_data):
-        # On récupère les données des lignes s'il y en a
-        lignes_data = validated_data.pop('lignes', None)
+        lignes_data = validated_data.pop('lignes_update', None)
 
-        # Mise à jour des champs simples
+        # Met à jour les champs simples
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
+        # Met à jour les lignes existantes
         if lignes_data:
             existing_ids = [l.id for l in instance.lignes.all()]
-            updated_ids = []
-
             for ligne_data in lignes_data:
                 ligne_id = ligne_data.get('id')
                 if ligne_id in existing_ids:
-                    ligne = DevisLigne.objects.get(id=ligne_id, devis=instance)
+                    ligne = instance.lignes.get(id=ligne_id)
                     ligne.designation_id = ligne_data.get('designation', ligne.designation_id)
                     ligne.quantite = ligne_data.get('quantite', ligne.quantite)
                     ligne.prix_unitaire = ligne_data.get('prix_unitaire', ligne.prix_unitaire)
                     ligne.prix_total = ligne_data.get('prix_total', ligne.prix_total)
                     ligne.save()
-                    updated_ids.append(ligne_id)
 
         return instance
-
-

@@ -33,6 +33,7 @@ urlpatterns = [
     path('designation/', include('designation.urls')),  
     path('fiches_besoin/fiches_besoin/', include('besoins.urls')),
     path('api/users/', include('users.urls')),
+    path('boncommande/', include('boncommande.urls')), 
 
 
     

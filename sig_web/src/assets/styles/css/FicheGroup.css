@@ -1,37 +1,8 @@
-/* 
-.action-button {
-  background: transparent;
-  border: none; 
-  cursor: pointer; 
-  margin-right: 10px;
-  padding: 5px 8px; 
-  border-radius: 4px; 
-  transition: background-color 0.3s ease;
-}
-
-.action-button:last-child {
-  margin-right: 0; 
-}
-
-.action-button:hover {
-  background-color: rgba(0, 0, 0, 0.1); 
-}
 
 
-.action-button i {
-  font-size: 16px;
-  vertical-align: middle; 
-  pointer-events: none; 
-}
-
- */
-
-
- 
-/* Style des boutons d'action */
 .action-buttons {
   display: flex;
-  gap: 10px; /* Espacement entre les boutons */
+  gap: 10px;
   justify-content: center;
 }
 

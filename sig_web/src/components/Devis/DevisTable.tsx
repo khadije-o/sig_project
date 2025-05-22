@@ -1,5 +1,7 @@
 import React from "react";
 import { DevisGlobal } from "../../types/devisTypes";
+import { useNavigate } from "react-router-dom";
+import '../../components/Devis/DevisDetail.css'
 
 interface DevisTableProps {
   devisList: DevisGlobal[];
@@ -13,9 +15,9 @@ const DevisTable: React.FC<DevisTableProps> = ({
   devisList,
   onDelete,
   onEdit,
-  onView,
   onDownloadPdf,
 }) => {
+  const navigate = useNavigate();
   return (
     <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
       <thead>
@@ -36,7 +38,7 @@ const DevisTable: React.FC<DevisTableProps> = ({
             <td className="px-4 py-2">{devis.total_ttc} DA</td>
             <td className="px-4 py-2 space-x-2">
               <button
-                onClick={() => onView(devis)}
+                onClick={() => navigate(`/devis/${devis.id}`)}
                 className="bg-blue-500 text-white px-2 py-1 rounded"
               >
                 Voir

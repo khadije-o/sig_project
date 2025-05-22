@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf import settings  # <- à la place de django.contrib.auth.models
+from django.conf import settings
 
 class FicheBesoin(models.Model):
     STATUS_CHOICES = [
@@ -9,7 +9,7 @@ class FicheBesoin(models.Model):
         ('Historique', 'Historique'),
     ]
 
-    numero = models.IntegerField()  # tu avais demandé que ce soit int
+    numero = models.IntegerField()  
     date_fiche = models.DateField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # <- ici
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='En attente')

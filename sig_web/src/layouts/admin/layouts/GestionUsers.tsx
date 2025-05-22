@@ -1,6 +1,6 @@
 import { useEffect, useState, FormEvent } from 'react';
 import axios from 'axios';
-import '../../../css/LoginPage.css'
+import '../../../assets/styles/css/LoginPage.css'
 import Swal from 'sweetalert2';
 
 const GestionUsers = () => {

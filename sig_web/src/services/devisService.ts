@@ -53,3 +53,12 @@ export const createBonCommande = async (
   });
   return response.data;
 };
+
+
+
+export const fetchDevisById = async (id: number, token: string): Promise<DevisGlobal> => {
+  const response = await axios.get(`${API_URL}/devisglobal/devis-globals/${id}/`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};

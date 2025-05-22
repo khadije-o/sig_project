@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import { createFournisseur } from '../../services/fournisseurService';
 import { Fournisseur } from '../../types/fournisseurTypes';
 import Swal from 'sweetalert2';
+import '../Fournisseur/FournisseurForm.css'
 
 const emptyFournisseur: Fournisseur = {
   nom_entreprise: '',
@@ -14,9 +15,10 @@ const emptyFournisseur: Fournisseur = {
 
 interface Props {
   onSuccess: () => void;
+  onCancel: () => void;
 }
 
-const FournisseurForm = ({ onSuccess }: Props) => {
+const FournisseurForm = ({ onSuccess,onCancel }: Props) => {
   const [formData, setFormData] = useState<Fournisseur>(emptyFournisseur);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -32,8 +34,9 @@ const FournisseurForm = ({ onSuccess }: Props) => {
     }
   };
 
+
   return (
-    <form onSubmit={handleSubmit} className="register-form">
+    <form onSubmit={handleSubmit} className="fournisseur-form">
       <input type="text" placeholder="Entreprise" required value={formData.nom_entreprise}
         onChange={e => setFormData({ ...formData, nom_entreprise: e.target.value })} />
       <input type="text" placeholder="Téléphone" required value={formData.telephone}
@@ -46,7 +49,13 @@ const FournisseurForm = ({ onSuccess }: Props) => {
         onChange={e => setFormData({ ...formData, rc: e.target.value })} />
       <input type="text" placeholder="Compte bancaire" value={formData.compte_bancaire}
         onChange={e => setFormData({ ...formData, compte_bancaire: e.target.value })} />
-      <button type="submit">Enregistrer</button>
+      <div className="form-buttons">
+        <button type="submit" className="submit-btn">Enregistrer</button>
+        <button type="button" onClick={onCancel} className="cancel-btn">
+  Annuler
+</button>
+
+      </div>
     </form>
   );
 };

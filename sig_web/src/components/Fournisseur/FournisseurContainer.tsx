@@ -12,6 +12,8 @@ import FournisseurForm from './FournisseurForm';
 import FournisseurTable from './FournisseurTable';
 import { getDesignations } from '../../services/designationService';
 import { createDevis } from '../../services/devisService';
+import "../../assets/styles/css/devis.css"
+import { useNavigate } from 'react-router-dom';
 
 const FournisseurContainer = () => {
   const { authTokens } = useContext(AuthContext);
@@ -214,31 +216,70 @@ if (!authTokens) {
     f.nom_entreprise.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const navigate = useNavigate();
+
+
   return (
     <div className="user-container">
-      <h1>Fournisseurs</h1>
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>Gestion de devis</h1>
+
 
       <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Rechercher..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Fermer' : 'Ajouter Fournisseur'}
-        </button>
-      </div>
+  <div className="search-input-wrapper">
+    <input
+      type="text"
+      placeholder="Rechercher..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+     {searchTerm && (
+    <i
+      className="fas fa-times clear-input-icon" 
+      onClick={() => setSearchTerm('')}
+      role="button"
+      aria-label="Effacer la recherche"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === 'Enter' && setSearchTerm('')}
+      style={{ cursor: 'pointer' }}
+    />
+  )}
+  </div>
+    {!showForm && (
+    <button onClick={() => setShowForm(true)} className="add-btn">
+      Ajouter Fournisseur
+    </button>
+  )}
 
-      {showForm && <FournisseurForm onSuccess={fetchFournisseurs} />}
+</div>
 
+
+      {showForm && (
+  <FournisseurForm
+    onSuccess={() => {
+      fetchFournisseurs();
+      setShowForm(false);
+    }}
+    onCancel={() => setShowForm(false)}
+  />
+)}
+
+       <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "10px" ,
+          }}>
+      <button onClick={() => navigate("/mes-devis")} className="add-btn">
+        <i style={{ marginRight: "5px" }}></i> Liste des devis
+      </button>
+    </div>
       <FournisseurTable
+      
         fournisseurs={filteredFournisseurs}
         onDelete={handleDelete}
         onRefresh={fetchFournisseurs}
         onEdit={handleEdit}
         onCreateDevis={handleCreateDevis}
       />
+
+
+
     </div>
   );
 };

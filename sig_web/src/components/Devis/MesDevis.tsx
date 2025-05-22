@@ -10,9 +10,12 @@ import DevisTable from "./DevisTable";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { getDesignations } from "../../services/designationService";
+import "../../assets/styles/css/devis.css"
+import { useNavigate } from "react-router-dom";
 
 const MesDevis: React.FC = () => {
   const { authTokens } = useAuth();
+  const navigate = useNavigate(); 
   const [devisList, setDevisList] = useState<DevisGlobal[]>([]);
   const [selectedDevis, setSelectedDevis] = useState<DevisGlobal | null>(null);
   const [showDetail, setShowDetail] = useState(false);
@@ -182,28 +185,48 @@ const MesDevis: React.FC = () => {
 };
 
 
-
-  
-
 return (
   <div className="p-6">
+    {/* Bouton Retour */}
+      <button onClick={() => navigate(-1)} className="backButton">
+        <i className="fas fa-arrow-left" aria-hidden="true"></i> 
+      </button>
     <h1 className="text-2xl font-bold mb-4">Mes Devis</h1>
 
-    {showDetail && selectedDevis ? (
+    {/* {showDetail && selectedDevis ? (
       <DevisDetail devis={selectedDevis} onClose={() => setShowDetail(false)} />
-    ) : (
+    ) : ( */}
       <>
-        {/* Barre de recherche visible uniquement sur la liste */}
-        <input
-          type="text"
-          placeholder="Rechercher un devis par numéro..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mb-4 p-2 border rounded w-full max-w-sm"
-        />
+        {/* Barre de recherche avec icône pour effacer */}
+        
+        <div className="search-bar">
+  <div className="search-input-wrapper">
+          <input
+            type="text"
+            placeholder="Rechercher un devis par numéro..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="p-2 border rounded w-full"
+            style={{ paddingRight: '30px' }}
+          />
+          {searchTerm && (
+            <i
+              className="fas fa-times clear-input-icon" 
+              onClick={() => setSearchTerm('')}
+              role="button"
+              aria-label="Effacer la recherche"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === 'Enter' && setSearchTerm('')}
+              style={{ cursor: 'pointer' }}
+            />
+          )}
+        </div>
+        </div>
 
         {filteredDevisList.length === 0 ? (
-          <p className="text-center text-gray-500 mt-6">Aucun résultat</p>
+          <p style={{ textAlign: 'center', marginTop: '30px', fontStyle: 'italic', color: '#777' }}>
+            Aucun résultat
+          </p>
         ) : (
           <DevisTable
             devisList={filteredDevisList}
@@ -214,9 +237,10 @@ return (
           />
         )}
       </>
-    )}
+    {/* )} */}
   </div>
 );
+
 
 };
 

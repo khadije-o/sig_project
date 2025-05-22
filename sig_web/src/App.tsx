@@ -22,7 +22,7 @@ import SideBarRouter from './components/SideBarRouter';
 import FisheBesoinsAdmin from './layouts/admin/layouts/AdminFisheBesoins';
 import FisheBesoinsUser from './layouts/user/layouts/UserFisheBesoins';
 import Devis from './pages/Devis';
-import GroupFicheBesoins from './layouts/admin/layouts/GroupFicheBesoins';
+import GroupFicheBesoins from './pages/GroupFicheBesoins';
 import GestionUsers from './layouts/admin/layouts/GestionUsers';
 import MesDevis from './components/Devis/MesDevis';
 import MesProfils from './components/MesProfils';
@@ -30,9 +30,9 @@ import DesignationPage from './pages/Designation/DesignationPage';
 import ConsolidationPage from './pages/ConsolidationPage';
 import FournisseurContainer from './components/Fournisseur/FournisseurContainer';
 import BonCommandeList from './components/BonDeCommande/BonCommandeList';
-import BonCommandeDetail from './components/BonDeCommande/BonCommandeDetail';
 import BonCommandeDetailWrapper from './pages/BonCommandeDetailWrapper';
 import Historique from './layouts/user/layouts/Historique';
+import DevisDetail from './components/Devis/DevisDetail';
 
 
 function AppContent() {
@@ -91,6 +91,8 @@ function AppContent() {
           <Route path="/boncommande/:id" element={<BonCommandeDetailWrapper />}/>
           <Route path="/mes-profils" element={<MesProfils />} />
           <Route path="/historique" element={<Historique />} />
+          <Route path="/devis/:id" element={<DevisDetail />} />
+          
           
         </Route>
       </Routes>

@@ -4,7 +4,7 @@ import { useState, useContext, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import deskImage from '../assets/images/logo1.jpg';
-import '../css/LoginPage.css';
+import '../assets/styles/css/LoginPage.css';
 
 function RegisterPage() {
   const authContext = useContext(AuthContext);

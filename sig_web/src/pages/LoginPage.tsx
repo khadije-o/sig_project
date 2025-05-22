@@ -1,10 +1,7 @@
-
-
-
 import React, { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import deskImage from '../assets/images/logo1.jpg';
-import '../css/LoginPage.css';
+import '../assets/styles/css/LoginPage.css'
 
 function LoginPage() {
   const authContext = useContext(AuthContext);
@@ -61,16 +58,6 @@ function LoginPage() {
             <div className="login-button-container">
               <button type="submit">Se connecter</button>
             </div>
-
-            {/* <div className="text-center">
-              <a className="forgot-link"  href="#!">Mot de passe oublié?</a>
-              <p className="mt-2" style={{ color: "#393f81" }}>
-                Vous n'avez pas de compte?{" "}
-                <Link to="/register" className="register-link">
-                  Créer un compte
-                </Link>
-              </p>
-            </div> */}
           </form>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import { Fournisseur } from '../../types/fournisseurTypes';
+import Button from '../button/button';
 import IconButton from '../button/IconButton';
 
 interface Props {
@@ -10,6 +11,13 @@ interface Props {
 }
 
 const FournisseurTable = ({ fournisseurs, onDelete, onEdit, onCreateDevis }: Props) => {
+   if (fournisseurs.length === 0) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '30px', fontStyle: 'italic', color: '#777' }}>
+        Aucun résultat trouvé.
+      </div>
+    );
+  }
   return (
     <table className="user-table">
       <thead>
@@ -37,18 +45,23 @@ const FournisseurTable = ({ fournisseurs, onDelete, onEdit, onCreateDevis }: Pro
                 iconClass="fal fa-edit"
                 title="Modifier"
                 onClick={() => onEdit(fournisseur)}
+                variant="edit"
               ></IconButton>
 
               <IconButton
               iconClass="fal fa-trash-alt"
               title="Supprimer"
               onClick={() => onDelete(fournisseur.id)}
+              variant="danger"
             />
-            <IconButton
-              iconClass="fal fa-plus"
-              title="Créer un devis"
+            <Button 
+              title="Créer un devis" 
               onClick={() => onCreateDevis(fournisseur)}
-            />
+              variant="secondary"
+              size="sm"
+            >
+              Créer un devis
+            </Button>
             </td>
           </tr>
         ))}

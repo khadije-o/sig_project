@@ -23,7 +23,7 @@ h5 {
 
 /* Container instead of card */
 .login-container {
-  width: 100%;
+  width: 30%;
   max-width: 500px;
   min-height: auto;
   border-radius: 0.6rem;
@@ -89,7 +89,7 @@ h5 {
 }
 
 .login-button-container button {
-  width: 70%;
+  width: 60%;
   max-width: 100%;
   background-color: #264b3e;
   border: none;
@@ -106,33 +106,7 @@ h5 {
   background-color: #2b614e;
 }
 
-/* Links and text below form */
-/* .text-center {
-  text-align: center;
-  font-size: 0.85rem;
-  margin-top: 1.2rem;
-}
 
-.text-center a {
-  color: #393f81;
-  text-decoration: none;
-}
-
-.text-center a:hover {
-  text-decoration: underline;
-} */
-
-/* Footer */
-.login-footer {
-  background-color: rgba(0, 0, 0, 0.2);
-  padding: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
-.forgot-link {
-  color: #bd1111;
-}
 
 .register-link {
   color: #10a571;

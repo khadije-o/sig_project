@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./left-sidebar.css";
 import classNames from "classnames";
 import { Fragment } from "react/jsx-runtime";
@@ -21,19 +21,9 @@ const LeftSidebar = ({
       label: "Fishe Besoins",
     },
     {
-      routerLink: "/products",
-      icon: "fal fa-box-open",
-      label: "Products",
-    },
-    {
-      routerLink: "/pages",
-      icon: "fal fa-file",
-      label: "Pages",
-    },
-    {
-      routerLink: "/settings",
-      icon: "fal fa-cog",
-      label: "Settings",
+      routerLink: "/historique",
+      icon: "fal fa-file-invoice",
+      label: "Historique",
     },
   ];
 
@@ -66,30 +56,33 @@ const LeftSidebar = ({
         )}
       </div>
 
-      <div className="sidenav-nav">
+      <ul className="sidenav-nav">
         {items.map((item) => (
           <li key={item.label} className="sidenav-nav-item">
-            <Link className="sidenav-nav-link" to={item.routerLink}>
-              <i
-                className={classNames("sidenav-link-icon", item.icon)}
-              ></i>
+            <NavLink
+              to={item.routerLink}
+              className={({ isActive }) =>
+                classNames("sidenav-nav-link", { active: isActive })
+              }
+            >
+              <i className={classNames("sidenav-link-icon", item.icon)}></i>
               {!isLeftSidebarCollapsed && (
                 <span className="sidenav-link-text">{item.label}</span>
               )}
-            </Link>
+            </NavLink>
           </li>
         ))}
 
         {/* Logout item */}
-        <li className="sidenav-nav-item" onClick={() => logoutUser()}> {/* Appel explicite de la fonction */}
-        <div className="sidenav-nav-link" style={{ cursor: "pointer" }}>
-          <i className="fal fa-sign-out sidenav-link-icon"></i>
-          {!isLeftSidebarCollapsed && (
-            <span className="sidenav-link-text">Logout</span>
-          )}
-        </div>
-      </li>
-      </div>
+        <li className="sidenav-nav-item" onClick={logoutUser}>
+          <div className="sidenav-nav-link" style={{ cursor: "pointer" }}>
+            <i className="fal fa-sign-out sidenav-link-icon"></i>
+            {!isLeftSidebarCollapsed && (
+              <span className="sidenav-link-text">Logout</span>
+            )}
+          </div>
+        </li>
+      </ul>
     </div>
   );
 };

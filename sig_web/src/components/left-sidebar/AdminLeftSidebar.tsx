@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import "./left-sidebar.css";
 import classNames from "classnames";

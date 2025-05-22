@@ -32,6 +32,7 @@ import FournisseurContainer from './components/Fournisseur/FournisseurContainer'
 import BonCommandeList from './components/BonDeCommande/BonCommandeList';
 import BonCommandeDetail from './components/BonDeCommande/BonCommandeDetail';
 import BonCommandeDetailWrapper from './pages/BonCommandeDetailWrapper';
+import Historique from './layouts/user/layouts/Historique';
 
 
 function AppContent() {
@@ -89,6 +90,7 @@ function AppContent() {
           <Route path="/mes-devis" element={<MesDevis />} />
           <Route path="/boncommande/:id" element={<BonCommandeDetailWrapper />}/>
           <Route path="/mes-profils" element={<MesProfils />} />
+          <Route path="/historique" element={<Historique />} />
           
         </Route>
       </Routes>
